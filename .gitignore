@@ -1,7 +1,6 @@
 # Archivos compilados
 bin/
 *.class
-*.jar
 *.war
 *.ear
 
