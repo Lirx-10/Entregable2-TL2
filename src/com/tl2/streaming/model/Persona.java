@@ -1,11 +1,25 @@
 package com.tl2.streaming.model;
 
 public class Persona {
+    private int id;
     private String nombre;
     private String apellido;
     private int DNI;
     private int edad;
-    
+
+    public Persona(int id, String n, String a, int DNI, int edad){
+        this.id = id;
+        this.nombre = n;
+        this.apellido = a;
+        this.DNI = DNI;
+        this.edad = edad;
+    }
+    public int getId(){
+        return id;
+    }
+    public void setId(int id){
+        this.id = id;
+    }
     public String getNombre() {
         return nombre;
     }
@@ -30,6 +44,4 @@ public class Persona {
     public void setEdad(int edad) {
         this.edad = edad;
     } 
-
-    
 }
