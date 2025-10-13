@@ -14,4 +14,6 @@ public class MyConnection {
         }
         return Conexion;
     }
+
+    private MyConnection(){}
 }

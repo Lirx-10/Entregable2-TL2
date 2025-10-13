@@ -1,4 +1,4 @@
-package com.tl2.streaming.dao.impl;
+package com.tl2.streaming.dao.jdbc;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -8,16 +8,12 @@ import java.util.List;
 import com.tl2.streaming.dao.PersonaDAO;
 import com.tl2.streaming.model.Persona;
 
-public class DAOPersonaImpl implements PersonaDAO{
+public class DAOPersonaJDBC implements PersonaDAO{
 
     private final String GETONE = "SELECT FROM * PERSONA WHERE ID = ?";
 
     // Usar un constructor que reciba el parametro conexión es mejor práctica, 1 conexión en
     // el main (o donde sea) que será usada para todos los DAO
-    private Connection conn;
-    public DAOPersonaImpl(Connection conn){
-        this.conn = conn;
-    }
 
     @Override
     public Persona obtener(int id) {
