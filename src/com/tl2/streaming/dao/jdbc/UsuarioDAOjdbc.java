@@ -18,5 +18,23 @@ public class UsuarioDAOjdbc implements UsuarioDAO {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'obtener'");
     }
+
+    @Override
+    public void insertar(Usuario a) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'insertar'");
+    }
+
+    @Override
+    public void modificar(Usuario a) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'modificar'");
+    }
+
+    @Override
+    public void eliminar(int id) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'eliminar'");
+    }
     
 }

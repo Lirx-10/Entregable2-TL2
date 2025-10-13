@@ -4,11 +4,11 @@ import java.util.List;
 
 public interface DAO<T> {
    
-    //void insertar(T a);
+    void insertar(T a);
 
-    //void modificar(T a);
+    void modificar(T a);
 
-    //void eliminar(int id);
+    void eliminar(int id);
 
     List<T> obtenerTodo();
 

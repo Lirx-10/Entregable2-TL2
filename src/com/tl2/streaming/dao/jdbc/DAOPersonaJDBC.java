@@ -31,5 +31,23 @@ public class DAOPersonaJDBC implements PersonaDAO{
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'obtenerTodo'");
     }
+
+    @Override
+    public void insertar(Persona a) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'insertar'");
+    }
+
+    @Override
+    public void modificar(Persona a) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'modificar'");
+    }
+
+    @Override
+    public void eliminar(int id) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'eliminar'");
+    }
     
 }

@@ -18,5 +18,23 @@ public class PeliculaDAOjdbc implements PeliculaDAO {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'obtener'");
     }
+
+    @Override
+    public void insertar(Pelicula a) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'insertar'");
+    }
+
+    @Override
+    public void modificar(Pelicula a) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'modificar'");
+    }
+
+    @Override
+    public void eliminar(int id) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'eliminar'");
+    }
     
 }
