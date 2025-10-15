@@ -1,0 +1,69 @@
+package com.tl2.streaming.dao.jdbc;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.List;
+
+import com.tl2.streaming.dao.PersonaDAO;
+import com.tl2.streaming.model.Persona;
+import com.tl2.streaming.util.MyConnection;
+
+public class PersonaDAOjdcb implements PersonaDAO{
+
+    public Persona obtener(int id) {
+        Persona p = new Persona();
+        try (Connection conn = MyConnection.getConnection()){
+            String query = "SELECT * FROM PERSONA WHERE ID = ?;";
+            PreparedStatement stmt = conn.prepareStatement(query);
+            stmt.setInt(1, id);
+            ResultSet rs = stmt.executeQuery();
+            p.setNombre(rs.getString("NOMBRE"));
+            p.setApellido(rs.getString("APELLIDO"));
+            p.setDNI(rs.getInt("DNI"));
+            p.setEdad(rs.getInt("EDAD"));
+            p.setId(rs.getInt(1));
+        }catch (SQLException e) {
+            System.out.println("Hubo un error");
+        }
+        return p;
+    }
+
+    @Override
+    public List<Persona> obtenerTodo() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'obtenerTodo'");
+    }
+
+    @Override
+    public void insertar(Persona a) {
+        try (Connection conn = MyConnection.getConnection()){
+            String query = 
+                "INSERT INTO PERSONA(NOMBRE, APELLIDO, DNI, EDAD)"+ 
+                "values (?, ?, ?, ?)";
+            PreparedStatement stmt = conn.prepareStatement(query);
+            stmt.setString(1, a.getNombre());
+            stmt.setString(2, a.getApellido());
+            stmt.setInt(3, a.getDNI());
+            stmt.setInt(3, a.getDNI());
+            ResultSet rs = stmt.executeQuery();
+        } catch (SQLException e) {
+            System.out.println("Error papito");
+        }
+        throw new UnsupportedOperationException("Unimplemented method 'insertar'");
+    }
+
+    @Override
+    public void modificar(Persona a) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'modificar'");
+    }
+
+    @Override
+    public void eliminar(int id) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'eliminar'");
+    }
+    
+}

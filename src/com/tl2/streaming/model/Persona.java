@@ -7,12 +7,14 @@ public class Persona {
     private int DNI;
     private int edad;
 
-    public Persona(int id, String n, String a, int DNI, int edad){
-        this.id = id;
+    public Persona(String n, String a, int DNI, int edad){
         this.nombre = n;
         this.apellido = a;
         this.DNI = DNI;
         this.edad = edad;
+    }
+    public Persona() {
+        //TODO Auto-generated constructor stub
     }
     public int getId(){
         return id;
