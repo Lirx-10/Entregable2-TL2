@@ -1,8 +1,7 @@
 package com.tl2.streaming.dao.jdbc;
 
 import java.util.List;
-
-import com.tl2.streaming.dao.ReseniaDAO;
+import com.tl2.streaming.dao.*;
 import com.tl2.streaming.model.Resenia;
 
 public class ReseniaDAOjdbc implements ReseniaDAO{

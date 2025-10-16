@@ -2,7 +2,7 @@ package com.tl2.streaming.dao.jdbc;
 
 import java.util.List;
 
-import com.tl2.streaming.dao.PeliculaDAO;
+import com.tl2.streaming.dao.*;
 import com.tl2.streaming.model.Pelicula;
 
 public class PeliculaDAOjdbc implements PeliculaDAO {

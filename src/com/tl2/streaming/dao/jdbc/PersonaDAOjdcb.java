@@ -6,26 +6,55 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
+import javax.naming.spi.DirStateFactory.Result;
+
 import com.tl2.streaming.dao.PersonaDAO;
 import com.tl2.streaming.model.Persona;
 import com.tl2.streaming.util.MyConnection;
 
 public class PersonaDAOjdcb implements PersonaDAO{
 
-    public Persona obtener(int id) {
-        Persona p = new Persona();
+    public Persona obtenerNombre(String nombre){
+        Persona p = null;
         try (Connection conn = MyConnection.getConnection()){
+            String query = "SELECT * FROM PERSONA WHERE NOMBRE = ?;";
+            PreparedStatement stmt = conn.prepareStatement(query);
+            stmt.setString(1,nombre);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()){
+                p = new Persona();
+                p.setNombre(rs.getString("NOMBRE"));
+                p.setApellido(rs.getString("APELLIDO"));
+                p.setDNI(rs.getInt("DNI"));
+                p.setEdad(rs.getInt("EDAD"));
+                p.setId(rs.getInt(1));
+            }
+        } catch (SQLException e) {
+            System.out.println("Hubo un error "+ e.getMessage());
+        }
+        return p;
+    }
+
+    public Persona obtener(int id) {
+        Persona p = null;
+        try (Connection conn = MyConnection.getConnection()){
+
             String query = "SELECT * FROM PERSONA WHERE ID = ?;";
             PreparedStatement stmt = conn.prepareStatement(query);
             stmt.setInt(1, id);
             ResultSet rs = stmt.executeQuery();
-            p.setNombre(rs.getString("NOMBRE"));
-            p.setApellido(rs.getString("APELLIDO"));
-            p.setDNI(rs.getInt("DNI"));
-            p.setEdad(rs.getInt("EDAD"));
-            p.setId(rs.getInt(1));
+
+            if(rs.next()){
+                p = new Persona();
+                p.setNombre(rs.getString("NOMBRE"));
+                p.setApellido(rs.getString("APELLIDO"));
+                p.setDNI(rs.getInt("DNI"));
+                p.setEdad(rs.getInt("EDAD"));
+                p.setId(rs.getInt(1));
+            }
         }catch (SQLException e) {
-            System.out.println("Hubo un error");
+            System.out.println("Hubo un error "+ e.getMessage());
         }
         return p;
     }
@@ -46,12 +75,11 @@ public class PersonaDAOjdcb implements PersonaDAO{
             stmt.setString(1, a.getNombre());
             stmt.setString(2, a.getApellido());
             stmt.setInt(3, a.getDNI());
-            stmt.setInt(3, a.getDNI());
-            ResultSet rs = stmt.executeQuery();
+            stmt.setInt(4, a.getEdad());
+            stmt.executeUpdate();
         } catch (SQLException e) {
-            System.out.println("Error papito");
+            System.out.println("Error papito " + e.getMessage());
         }
-        throw new UnsupportedOperationException("Unimplemented method 'insertar'");
     }
 
     @Override
