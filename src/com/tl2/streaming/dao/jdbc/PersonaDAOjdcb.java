@@ -6,7 +6,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
-import javax.naming.spi.DirStateFactory.Result;
 
 import com.tl2.streaming.dao.PersonaDAO;
 import com.tl2.streaming.model.Persona;
@@ -38,8 +37,8 @@ public class PersonaDAOjdcb implements PersonaDAO{
 
     public Persona obtener(int id) {
         Persona p = null;
-        try (Connection conn = MyConnection.getConnection()){
-
+        try {
+            Connection conn = MyConnection.getConnection();
             String query = "SELECT * FROM PERSONA WHERE ID = ?;";
             PreparedStatement stmt = conn.prepareStatement(query);
             stmt.setInt(1, id);
@@ -67,7 +66,8 @@ public class PersonaDAOjdcb implements PersonaDAO{
 
     @Override
     public void insertar(Persona a) {
-        try (Connection conn = MyConnection.getConnection()){
+        try {
+            Connection conn = MyConnection.getConnection();
             String query = 
                 "INSERT INTO PERSONA(NOMBRE, APELLIDO, DNI, EDAD)"+ 
                 "values (?, ?, ?, ?)";
@@ -77,6 +77,7 @@ public class PersonaDAOjdcb implements PersonaDAO{
             stmt.setInt(3, a.getDNI());
             stmt.setInt(4, a.getEdad());
             stmt.executeUpdate();
+            System.out.println("Persona insertada correctamente");
         } catch (SQLException e) {
             System.out.println("Error papito " + e.getMessage());
         }
@@ -84,14 +85,28 @@ public class PersonaDAOjdcb implements PersonaDAO{
 
     @Override
     public void modificar(Persona a) {
-        // TODO Auto-generated method stub
+        try {
+            Connection conn = MyConnection.getConnection();
+            String query = "";
+        } catch (SQLException e) {
+            // TODO: handle exception
+        }
         throw new UnsupportedOperationException("Unimplemented method 'modificar'");
     }
 
     @Override
     public void eliminar(int id) {
-        // TODO Auto-generated method stub
+        try {
+            Connection conn = MyConnection.getConnection();
+            String query = "DELETE FROM PERSONA WHERE ID = ?";
+            PreparedStatement stmt = conn.prepareStatement(query);
+            stmt.setInt(1, id);
+            stmt.executeQuery();
+        } catch (SQLException e) {
+            // TODO: handle exception
+        }
+        
         throw new UnsupportedOperationException("Unimplemented method 'eliminar'");
     }
-    
+
 }

@@ -3,6 +3,7 @@ package com.tl2.streaming.model;
 import com.tl2.streaming.enumer.*;
 
 public class Usuario{
+    private int id;
     private String nombreUsuario;
     private String contrasenia;
     private String email;
@@ -18,6 +19,13 @@ public class Usuario{
         this.email = email;
         this.plan = plan;
 
+    }   
+
+    public int getId() {
+        return id;
+    }
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getNombreUsuario() {
@@ -55,5 +63,6 @@ public class Usuario{
     }
     public void setEmailVerificado(boolean emailVerificado) {
         this.emailVerificado = emailVerificado;
-    }   
+    }
+   
 }

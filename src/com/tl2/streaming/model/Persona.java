@@ -7,15 +7,36 @@ public class Persona {
     private int DNI;
     private int edad;
 
+    public Persona(){}
     public Persona(String n, String a, int DNI, int edad){
         this.nombre = n;
         this.apellido = a;
         this.DNI = DNI;
         this.edad = edad;
     }
-    public Persona() {
-        //TODO Auto-generated constructor stub
+
+    public boolean validarNombre(String texto) {
+        // Verifica que solo contenga letras, espacios y algunos caracteres especiales
+        return texto.matches("^[a-zA-ZáéíóúÁÉÍÓÚñÑ\\s]+$");
     }
+
+    public boolean contieneNumeros(String texto){
+        for (char c : texto.toCharArray()){
+            if(Character.isDigit(c)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean verificarEmail(String email){    
+        return email.matches("xxx@yyy");
+    }
+    
+    public static boolean esEmailValido(String email) {
+        return email != null && email.matches("^[\\w.%+-]+@[\\w.-]+\\.[a-zA-Z]{2,}$");
+    }
+
     public int getId(){
         return id;
     }
