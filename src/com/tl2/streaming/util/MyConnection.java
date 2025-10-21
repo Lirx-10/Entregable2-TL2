@@ -6,14 +6,14 @@ import java.sql.SQLException;
 
 public class MyConnection {
     private static Connection Conexion = null;
-     
+    
     public static Connection getConnection() throws SQLException{
         //Agregar para diagnosticar un problema mas especifico
-        if (Conexion == null){
+        if (Conexion == null || Conexion.isClosed()){
             Conexion = DriverManager.getConnection("jdbc:sqlite:database/streaming.db");
         }
         return Conexion;
     }
-
+    
     private MyConnection(){}
 }

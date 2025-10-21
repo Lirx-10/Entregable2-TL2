@@ -1,14 +1,18 @@
 package com.tl2.streaming.model;
 import com.tl2.streaming.enumer.*;
 public class Pelicula {
-
+	private int id;
     private Generos genero;
     private String titulo;
     private String resumen;
     private String director;
-    private int duracion;
+    private double duracion;
 
-    public Pelicula(Generos genero, String titulo, String resumen, String director, int duracion){
+    public Pelicula(){
+		
+	}
+    
+    public Pelicula(Generos genero, String titulo, String resumen, String director, double duracion){
         this.genero = genero;
         this.titulo = titulo;
         this.resumen = resumen;
@@ -16,6 +20,12 @@ public class Pelicula {
         this.duracion = duracion;
     }
 
+    public int getId() {
+		return id;
+	}
+    public void setId(int id) {
+    	this.id = id;
+    }
     public Generos getGenero() {
         return genero;
     }
@@ -40,10 +50,10 @@ public class Pelicula {
     public void setDirector(String director) {
         this.director = director;
     }
-    public int getDuracion() {
+    public double getDuracion() {
         return duracion;
     }
-    public void setDuracion(int duracion) {
+    public void setDuracion(double duracion) {
         this.duracion = duracion;
     }
 }
