@@ -5,4 +5,7 @@ import com.tl2.streaming.model.Persona;
 public interface PersonaDAO extends DAO<Persona>{
 
     Persona obtenerNombre(String n);
+
+    boolean existeDNI(int dni);
+
 } 

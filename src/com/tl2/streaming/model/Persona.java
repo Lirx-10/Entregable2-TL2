@@ -29,14 +29,6 @@ public class Persona {
         return false;
     }
 
-    public boolean verificarEmail(String email){    
-        return email.matches("xxx@yyy");
-    }
-    
-    public static boolean esEmailValido(String email) {
-        return email != null && email.matches("^[\\w.%+-]+@[\\w.-]+\\.[a-zA-Z]{2,}$");
-    }
-
     public int getId(){
         return id;
     }

@@ -12,7 +12,6 @@ import com.tl2.streaming.model.Persona;
 import com.tl2.streaming.util.MyConnection;
 
 public class PersonaDAOjdcb implements PersonaDAO{
-
     public Persona obtenerNombre(String nombre){
         Persona p = null;
         try (Connection conn = MyConnection.getConnection()){
@@ -20,7 +19,6 @@ public class PersonaDAOjdcb implements PersonaDAO{
             PreparedStatement stmt = conn.prepareStatement(query);
             stmt.setString(1,nombre);
             ResultSet rs = stmt.executeQuery();
-
             if (rs.next()){
                 p = new Persona();
                 p.setNombre(rs.getString("NOMBRE"));
@@ -43,7 +41,7 @@ public class PersonaDAOjdcb implements PersonaDAO{
             PreparedStatement stmt = conn.prepareStatement(query);
             stmt.setInt(1, id);
             ResultSet rs = stmt.executeQuery();
-
+            
             if(rs.next()){
                 p = new Persona();
                 p.setNombre(rs.getString("NOMBRE"));
@@ -107,6 +105,24 @@ public class PersonaDAOjdcb implements PersonaDAO{
         }
         
         throw new UnsupportedOperationException("Unimplemented method 'eliminar'");
+    }
+
+    @Override
+    public boolean existeDNI(int dni) {
+        try {
+            Connection conn = MyConnection.getConnection();
+            String query = "SELECT COUNT(*) FROM PERSONA WHERE DNI = ?";
+            PreparedStatement stmt = conn.prepareStatement(query);
+            stmt.setInt(1, dni);
+            ResultSet rs = stmt.executeQuery();
+            if(rs.next()){
+                int count = rs.getInt(1);
+                return count > 0;
+            }
+        } catch (SQLException e) {
+            System.out.println("error: "+e.getMessage());
+        }
+        return false;
     }
 
 }
