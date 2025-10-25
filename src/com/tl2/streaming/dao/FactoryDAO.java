@@ -15,7 +15,7 @@ public class FactoryDAO {
         return new UsuarioDAOjdbc();
     }
 
-    public static ReseniaDAO tReseniaDAO(){
+    public static ReseniaDAO getReseniaDAO(){
         return new ReseniaDAOjdbc();
     }
 
