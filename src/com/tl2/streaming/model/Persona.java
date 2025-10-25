@@ -1,24 +1,30 @@
 package com.tl2.streaming.model;
 
 public class Persona {
-    private int id;
+    private int id_persona;
     private String nombre;
     private String apellido;
     private int DNI;
     private int edad;
 
-    public Persona(int id, String n, String a, int DNI, int edad){
-        this.id = id;
+    public Persona(){}
+    public Persona(String n, String a, int DNI, int edad){
         this.nombre = n;
         this.apellido = a;
         this.DNI = DNI;
         this.edad = edad;
     }
-    public int getId(){
-        return id;
+
+    @Override
+    public String toString(){
+        return this.nombre +" "+ this.apellido +" "+ this.DNI +" "+ this.edad;
     }
-    public void setId(int id){
-        this.id = id;
+
+    public int getIdPersona(){
+        return id_persona;
+    }
+    public void setIdPersona(int id){
+        this.id_persona = id;
     }
     public String getNombre() {
         return nombre;

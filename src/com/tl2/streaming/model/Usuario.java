@@ -1,25 +1,31 @@
 package com.tl2.streaming.model;
 
-import com.tl2.streaming.enumer.*;
-
-public class Usuario{
+public class Usuario extends Persona{
+    private int id_usuario;
     private String nombreUsuario;
     private String contrasenia;
     private String email;
-    private Planes plan;
-    private Idiomas idioma;
-    private boolean emailVerificado;
 
     public Usuario(){}
     
-    public Usuario(String nombre,String contrasenia,String email,Planes plan,Idiomas idioma){
-        this.nombreUsuario = nombre;
+    public Usuario(String nombre, String apellido, int DNI, int edad,String nombreUsuario,String contrasenia,String email){
+        super(nombre,apellido,DNI,edad);
+        this.nombreUsuario = nombreUsuario;
         this.contrasenia = contrasenia;
         this.email = email;
-        this.plan = plan;
+    } 
 
+    @Override
+    public String toString(){
+        return "Nombre de usuario: "+nombreUsuario+" Email: "+email;
     }
 
+    public int getIdUsuario() {
+        return id_usuario;
+    }
+    public void setIdUsuario(int id) {
+        this.id_usuario = id;
+    }
     public String getNombreUsuario() {
         return nombreUsuario;
     }
@@ -37,23 +43,5 @@ public class Usuario{
     }
     public void setEmail(String email) {
         this.email = email;
-    }
-    public Planes getPlan() {
-        return plan;
-    }
-    public void setPlan(Planes plan) {
-        this.plan = plan;
-    }
-    public Idiomas getIdioma() {
-        return idioma;
-    }
-    public void setIdioma(Idiomas idioma) {
-        this.idioma = idioma;
-    }
-    public boolean isEmailVerificado() {
-        return emailVerificado;
-    }
-    public void setEmailVerificado(boolean emailVerificado) {
-        this.emailVerificado = emailVerificado;
     }   
 }
