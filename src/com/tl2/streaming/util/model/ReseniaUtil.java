@@ -1,4 +1,4 @@
-package com.tl2.streaming.util;
+package com.tl2.streaming.util.model;
 
 import java.time.Instant;
 import java.util.List;
@@ -12,12 +12,12 @@ import com.tl2.streaming.model.Resenia;
 import com.tl2.streaming.model.Usuario;
 import com.tl2.streaming.util.*;
 
-public class UtilidadesResenia {
+public class ReseniaUtil {
 	private ReseniaDAO reseniaDAO;
-	private UtilidadesPelicula utilPelicula;
-	public UtilidadesResenia() {
+	private PeliculaUtil utilPelicula;
+	public ReseniaUtil() {
 		this.reseniaDAO = FactoryDAO.getReseniaDAO();
-		utilPelicula = new UtilidadesPelicula();
+		utilPelicula = new PeliculaUtil();
 	}
 	
 	public void registrarResenia(ReseniaDAO reseniaDAO, PeliculaDAO peliculaDAO) {

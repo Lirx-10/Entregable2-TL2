@@ -95,7 +95,7 @@ public final class PersonaUtil {
 
     public static void listarPersonas(List<Persona> personas){
         for(Persona p: personas){
-            System.out.println("id:"+p.getIdPersona()+" "+p);
+            System.out.println("id:"+p.getId()+" "+p);
         }
     }
 }

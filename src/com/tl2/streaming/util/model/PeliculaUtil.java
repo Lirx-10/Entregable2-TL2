@@ -1,4 +1,4 @@
-package com.tl2.streaming.util;
+package com.tl2.streaming.util.model;
 
 import java.util.Collections;
 import java.util.Comparator;
@@ -11,10 +11,10 @@ import com.tl2.streaming.enumer.Generos;
 import com.tl2.streaming.model.Pelicula;
 import com.tl2.streaming.util.comparators.*;
 
-public class UtilidadesPelicula {
+public class PeliculaUtil {
 	private PeliculaDAO peliculaDAO;
 	
-	public UtilidadesPelicula() {
+	public PeliculaUtil() {
 		peliculaDAO = FactoryDAO.getPeliculaDAO();
 	}
 	public List<Pelicula> obtenerPeliculas(){
@@ -32,13 +32,13 @@ public class UtilidadesPelicula {
     	sc.close();
 		switch(opcion) {
 		case 1:
-			comparador = new ComparadorPorTitulo();
+			comparador = new ComparadorTitulo();
 			break;
 		case 2:
-			comparador = new ComparadorPorDuracion();
+			comparador = new ComparadorDuracion();
 			break;
 		case 3:
-			comparador = new ComparadorPorGenero();
+			comparador = new ComparadorGenero();
 			break;
 		default:
 			System.out.println("Saliendo...");

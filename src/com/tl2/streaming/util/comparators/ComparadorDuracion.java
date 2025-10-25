@@ -2,9 +2,9 @@ package com.tl2.streaming.util.comparators;
 import java.util.Comparator;
 import com.tl2.streaming.model.Pelicula;
 
-public class ComparadorPorDuracion implements Comparator<Pelicula> {
+public class ComparadorDuracion implements Comparator<Pelicula> {
 
-	public ComparadorPorDuracion() {
+	public ComparadorDuracion() {
 	}
 	@Override
 	public int compare(Pelicula p1, Pelicula p2) {

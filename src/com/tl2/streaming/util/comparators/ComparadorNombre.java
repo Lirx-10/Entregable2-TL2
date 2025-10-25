@@ -1,4 +1,4 @@
-package com.tl2.streaming.util.Comparetor;
+package com.tl2.streaming.util.comparators;
 
 import java.util.Comparator;
 import com.tl2.streaming.model.Usuario;

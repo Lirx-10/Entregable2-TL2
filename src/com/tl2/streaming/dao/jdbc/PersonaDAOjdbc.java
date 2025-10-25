@@ -12,7 +12,7 @@ import com.tl2.streaming.dao.PersonaDAO;
 import com.tl2.streaming.model.Persona;
 import com.tl2.streaming.util.MyConnection;
 
-public class PersonaDAOjdcb implements PersonaDAO{
+public class PersonaDAOjdbc implements PersonaDAO{
 
 
     @Override
@@ -76,7 +76,7 @@ public class PersonaDAOjdcb implements PersonaDAO{
                 p.setApellido(rs.getString("APELLIDO"));
                 p.setDNI(rs.getInt("DNI"));
                 p.setEdad(rs.getInt("EDAD"));
-                p.setIdPersona(rs.getInt(1));
+                p.setId(rs.getInt(1));
             }
         }catch (SQLException e) {
             System.out.println("Hubo un error "+ e.getMessage());
@@ -95,7 +95,7 @@ public class PersonaDAOjdcb implements PersonaDAO{
 
             while (rs.next()){
                 Persona p = new Persona();
-                p.setIdPersona(rs.getInt(1));
+                p.setId(rs.getInt(1));
                 p.setNombre(rs.getString(2));
                 p.setApellido(rs.getString(3));
                 p.setDNI(rs.getInt(4));
@@ -121,7 +121,7 @@ public class PersonaDAOjdcb implements PersonaDAO{
                 p.setApellido(rs.getString("APELLIDO"));
                 p.setDNI(rs.getInt("DNI"));
                 p.setEdad(rs.getInt("EDAD"));
-                p.setIdPersona(rs.getInt(1));
+                p.setId(rs.getInt(1));
             }
         } catch (SQLException e) {
             System.out.println("Hubo un error "+ e.getMessage());

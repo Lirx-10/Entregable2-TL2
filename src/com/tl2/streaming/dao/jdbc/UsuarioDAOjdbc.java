@@ -24,7 +24,7 @@ public class UsuarioDAOjdbc implements UsuarioDAO {
             stmt.setString(1, a.getNombreUsuario());
             stmt.setString(2, a.getEmail());
             stmt.setString(3, a.getContrasenia());
-            stmt.setInt(4, a.getIdPersona());
+            stmt.setInt(4, a.getId());
             stmt.executeUpdate();
             System.out.println("Usuario insertado correctamente");
         } catch (SQLException e) {
@@ -75,11 +75,11 @@ public class UsuarioDAOjdbc implements UsuarioDAO {
 
             while (rs.next()){
                 Usuario user = new Usuario();
-                user.setIdUsuario(rs.getInt(1));
+                user.setId(rs.getInt(1));
                 user.setNombreUsuario(rs.getString(2));
                 user.setContrasenia(rs.getString(3));
                 user.setEmail(rs.getString(4));
-                user.setIdPersona(rs.getInt(5));
+                user.setId(rs.getInt(5));
                 
                 usuarios.add(user);
             }

@@ -7,12 +7,12 @@ import java.util.List;
 import com.tl2.streaming.dao.FactoryDAO;
 import com.tl2.streaming.dao.PersonaDAO;
 import com.tl2.streaming.dao.UsuarioDAO;
-import com.tl2.streaming.dao.jdbc.PersonaDAOjdcb;
+import com.tl2.streaming.dao.jdbc.PersonaDAOjdbc;
 // Clases Modelo
 import com.tl2.streaming.model.Persona;
 import com.tl2.streaming.model.Usuario;
 //Clases Util
-import com.tl2.streaming.util.Comparetor.*;
+import com.tl2.streaming.util.comparators.ComparadorNombre;
 import com.tl2.streaming.util.model.PersonaUtil;
 
 public final class UsuarioUtil {
@@ -46,7 +46,7 @@ public final class UsuarioUtil {
             PersonaDAO pd = FactoryDAO.getPersonaDAO();
             pd.insertar(p);
             Persona per = pd.obtenerNombre(p.getNombre());
-            id = per.getIdPersona();
+            id = per.getId();
         }else if (opcion == 2){
             //traemos las personas y seleccionamos
             PersonaDAO pd = FactoryDAO.getPersonaDAO();
@@ -68,7 +68,7 @@ public final class UsuarioUtil {
             }
         }while(id_persona==0);
         Usuario u = new Usuario();
-        u.setIdPersona(id_persona);
+        u.setId(id_persona);
 
         System.out.println("Ingrese el nombre de usuario: ");
         String nombreUsuario = sc.nextLine().trim();
