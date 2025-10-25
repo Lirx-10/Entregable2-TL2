@@ -13,6 +13,5 @@ public interface DAO<T> {
     List<T> obtenerTodo();
 
     T obtener(int id);
-
     
 }

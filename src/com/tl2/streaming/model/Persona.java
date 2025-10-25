@@ -1,7 +1,7 @@
 package com.tl2.streaming.model;
 
 public class Persona {
-    private int id;
+    private int id_persona;
     private String nombre;
     private String apellido;
     private int DNI;
@@ -15,25 +15,16 @@ public class Persona {
         this.edad = edad;
     }
 
-    public boolean validarNombre(String texto) {
-        // Verifica que solo contenga letras, espacios y algunos caracteres especiales
-        return texto.matches("^[a-zA-ZáéíóúÁÉÍÓÚñÑ\\s]+$");
+    @Override
+    public String toString(){
+        return this.nombre +" "+ this.apellido +" "+ this.DNI +" "+ this.edad;
     }
 
-    public boolean contieneNumeros(String texto){
-        for (char c : texto.toCharArray()){
-            if(Character.isDigit(c)){
-                return true;
-            }
-        }
-        return false;
+    public int getIdPersona(){
+        return id_persona;
     }
-
-    public int getId(){
-        return id;
-    }
-    public void setId(int id){
-        this.id = id;
+    public void setIdPersona(int id){
+        this.id_persona = id;
     }
     public String getNombre() {
         return nombre;

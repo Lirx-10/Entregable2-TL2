@@ -44,8 +44,8 @@ public class SQLiteJDBC {
                 "NOMBRE_USUARIO TEXT NOT NULL,"+
                 "EMAIL TEXT NOT NULL,"+
                 "CONTRASEÑA TEXT NO NULL,"+
-                "ID_DATOS_PERSONALES INTEGER NOT NULL,"+
-                "CONSTRAINT USUARIO_DATOS_PERSONALES_FK FOREIGN KEY (ID) REFERENCES DATOS_PERSONALES(ID)"+
+                "ID_PERSONA INTEGER NOT NULL,"+
+                "CONSTRAINT USUARIO_PERSONA_FK FOREIGN KEY (ID) REFERENCES PERSONA(ID)"+
                 ");";
             st.executeUpdate(codigoSQL);
 
