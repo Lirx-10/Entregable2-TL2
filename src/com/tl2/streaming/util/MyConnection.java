@@ -11,7 +11,7 @@ public class MyConnection {
     
     public static Connection getConnection() throws SQLException{
         if (Conexion == null || Conexion.isClosed()){
-            Conexion = DriverManager.getConnection("jdbc:sqlite:database/streaming.db");
+            Conexion = DriverManager.getConnection("jdbc:sqlite:streaming.db");
         }
         return Conexion;
     }

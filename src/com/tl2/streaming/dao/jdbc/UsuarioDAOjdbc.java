@@ -9,6 +9,7 @@ import java.util.List;
 
 import com.tl2.streaming.dao.UsuarioDAO;
 import com.tl2.streaming.model.Usuario;
+import com.tl2.streaming.model.Persona;
 import com.tl2.streaming.util.MyConnection;
 
 public class UsuarioDAOjdbc implements UsuarioDAO {
@@ -24,7 +25,7 @@ public class UsuarioDAOjdbc implements UsuarioDAO {
                 stmt.setString(1, a.getNombreUsuario());
                 stmt.setString(2, a.getEmail());
                 stmt.setString(3, a.getContrasenia());
-                stmt.setInt(4, a.getId());
+                stmt.setInt(4, a.getPersona().getId());
                 stmt.executeUpdate();
                 System.out.println("Usuario insertado correctamente");
             }
@@ -41,7 +42,7 @@ public class UsuarioDAOjdbc implements UsuarioDAO {
         try {
             Connection conn = MyConnection.getConnection();
             try(PreparedStatement stmt = conn.prepareStatement(query)){
-                stmt.setInt(4, u.getId());
+                stmt.setInt(4, u.getPersona().getId());
                 stmt.setString(1, u.getNombreUsuario());
                 stmt.setString(2, u.getEmail());
                 stmt.setString(3, u.getContrasenia());
@@ -76,10 +77,12 @@ public class UsuarioDAOjdbc implements UsuarioDAO {
                 stmt.setInt(1,id);
                 try(ResultSet rs = stmt.executeQuery()){
                     if(rs.next()){
+                    	Persona p = new Persona();
                         user.setNombreUsuario(rs.getString("NOMBRE_USUARIO"));
                         user.setEmail(rs.getString("EMAIL"));
                         user.setContrasenia(rs.getString("CONTRASEÑA"));    
-                        user.setIdPersona(rs.getInt("ID_PERSONA"));
+                        p.setId = rs.getInt("ID_PERSONA");
+                        user.setPersona(p);
                     }
                 }
             }
@@ -102,15 +105,17 @@ public class UsuarioDAOjdbc implements UsuarioDAO {
             ResultSet rs = stmt.executeQuery()){
                 while (rs.next()){
                     Usuario user = new Usuario();
+                    Persona p = new Persona();
                     user.setId(rs.getInt("ID"));
                     user.setNombreUsuario(rs.getString("NOMBRE_USUARIO"));
                     user.setEmail(rs.getString("EMAIL"));
                     user.setContrasenia(rs.getString("CONTRASEÑA"));
-                    user.setIdPersona(rs.getInt("ID_PERSONA"));
-                    user.setNombre(rs.getString("NOMBRE"));
-                    user.setApellido(rs.getString("APELLIDO"));
-                    user.setDNI(rs.getInt("DNI"));
-                    user.setEdad(rs.getInt("EDAD"));
+                    p.setId(rs.getInt("ID_PERSONA"));
+                    p.setNombre(rs.getString("NOMBRE"));
+                    p.setApellido(rs.getString("APELLIDO"));
+                    p.setDNI(rs.getInt("DNI"));
+                    p.setEdad(rs.getInt("EDAD"));
+                    user.setPersona(p);
                     usuarios.add(user);
                 }
             }
