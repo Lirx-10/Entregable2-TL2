@@ -147,6 +147,5 @@ public class ReseniaDAOjdbc implements ReseniaDAO{
     		e.printStackTrace();
     	}
     	
-    }
-    
+    } 
 }

@@ -6,7 +6,8 @@ public class Persona {
     private String apellido;
     private int DNI;
     private int edad;
-
+    private int id_persona;
+    
     public Persona(){}
     public Persona(String n, String a, int DNI, int edad){
         this.nombre = n;
@@ -15,6 +16,10 @@ public class Persona {
         this.edad = edad;
     }
 
+    @Override
+    public String toString(){
+        return "Nombre: "+nombre+" Apellido: "+apellido+" DNI: "+DNI+" Edad: "+edad;
+    }
     public int getId(){
         return id;
     }
@@ -46,8 +51,10 @@ public class Persona {
         this.edad = edad;
     }
     
-    @Override
-    public String toString(){
-        return this.nombre +" "+ this.apellido +" "+ this.DNI +" "+ this.edad;
+    public int getId_persona() {
+        return id_persona;
+    }
+    public void setId_persona(int id_persona) {
+        this.id_persona = id_persona;
     }
 }

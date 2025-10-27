@@ -14,86 +14,116 @@ public final class PersonaUtil {
     private PersonaUtil(){}
     
     private static final Scanner sc = new Scanner(System.in);
-    
-    public static boolean validarNombre(String texto) {
+    private static final PersonaDAO pd = FactoryDAO.getPersonaDAO();
+
+    public static boolean noTieneNumeros(String texto) {
         if (texto == null || texto.length()==0){
             return false;  
         }                                                
         return texto.matches("^[a-zA-ZáéíóúÁÉÍÓÚñÑ\\s]+$");
     }
-
-    public static boolean validarDNI(int DNI){
-        PersonaDAO p = FactoryDAO.getPersonaDAO();
-        return !p.existeDNI(DNI);
-    }
-
-    //hola! isla de la poronga?? acá hay una malcogida...
-    public static Persona ingresarPersona(){
-        Persona p = new Persona();
-        
+    public static String validarNombre(){
         String nombre;
-        do{
-            System.out.println("Ingrese su nombre: ");
-            // .trim() quita los espacios en blanco "   Leo   " --> "Leo"
-            nombre = sc.nextLine().trim();
-            if(!validarNombre(nombre)){
-                System.out.println("Error: El nombre posee numeros o está vacío");
-                System.out.println("El nombre solo debe de poseer letras");
-            }
-        }while(!validarNombre(nombre));
-        p.setNombre(nombre);
-
-        String apellido;
-        do{
-            System.out.println("Ingrese su apellido: ");
-            apellido = sc.nextLine().trim();
-            if(!validarNombre(apellido)){
-                System.out.println("Error: El nombre posee numeros");
-                System.out.println("El nombre solo debe de poseer letras");
-            }
-        }while(!validarNombre(apellido));
-        p.setApellido(apellido);
-
-        int DNI;
+            do{
+                // .trim() quita los espacios en blanco "   Leo   " --> "Leo"
+                nombre = sc.nextLine().trim();
+                if(noTieneNumeros(nombre)==false){
+                    System.out.println("Error: El nombre posee numeros o está vacío");
+                    System.out.println("El nombre solo debe de poseer letras, ingreselo nuevamente");
+                }
+            }while(noTieneNumeros(nombre)==false);
+        return nombre;
+    }
+    public static int validarDNI(){
+        int DNI=0;
         boolean valido=false;
         do{ 
-            System.out.println("Ingrese su DNI: ");
             // try catch, para manejar la excepcion de ingresar un valor que no sea un entero
             try {
                 DNI = sc.nextInt();
-                if(validarDNI(DNI)==false){
+                if(pd.existeDNI(DNI)==false){
                     System.out.println("Error: Ya existe una persona con el mismo DNI");
-                    System.out.println("Ingrese un dni no existente? xd");
+                    System.out.println("Ingrese su DNI nuevamente");
                 } else {
                     valido = true;
-                    p.setDNI(DNI);
                 }
             } catch (InputMismatchException e) {
                 System.out.println("Ingresar un número válido");
                 sc.nextLine();//limpiar buffer
             }
-            
         }while(valido == false);
-        
-        int edad;
-        valido = false;
-        do{
-            System.out.println("Ingrese su edad: ");
-            try {
-                edad = sc.nextInt();
-                p.setEdad(edad);
-                valido = true;
-            } catch (InputMismatchException e) {
-                System.out.println("Ingresar un número entero válido");
-                sc.nextLine();//limpiar buffer
-            }
-            
-        }while(valido == false);
-
-        return p;
+        return DNI;
     }
 
-    public static void listarPersonas(List<Persona> personas){
+    public static int validarEdad(){
+        int edad=0;
+            boolean valido = false;
+            do{
+                System.out.println("Ingrese su edad: ");
+                try {
+                    edad = sc.nextInt();
+                    if(edad>0 && edad<120){
+                        valido = true;
+                    }
+                } catch (InputMismatchException e) {
+                    System.out.println("Ingresar un número entero válido");
+                    sc.nextLine();//limpiar buffer
+                }
+            }while(valido == false);
+        return edad;
+    }
+
+    public static void registrarPersona(){
+        Persona p = new Persona();
+        int check = 2;
+        do{
+            System.out.println("Ingrese su nombre: ");
+            p.setNombre(validarNombre());
+            System.out.println("Ingrese su apellido: ");
+            p.setApellido(validarNombre());
+            System.out.println("Ingrese su DNI: ");
+            p.setDNI(validarDNI()); 
+
+            System.out.println(p);
+            System.out.println("Los datos ingresados son correctos?");
+            System.out.println("1: Si son correctos");
+            System.out.println("2: No son correctos");
+            check = sc.nextInt();
+            if(check == 2){
+                System.out.println("Ingrese los datos nuevamente");
+            }
+        }while(check == 2);
+        
+        pd.insertar(p);
+    }
+
+    public static int ingresarPersona(){
+        Persona p = new Persona();
+        int check = 2;
+        do{
+            System.out.println("Ingrese su nombre: ");
+            p.setNombre(validarNombre());
+            System.out.println("Ingrese su apellido: ");
+            p.setApellido(validarNombre());
+            System.out.println("Ingrese su DNI: ");
+            p.setDNI(validarDNI()); 
+
+            System.out.println(p);
+            System.out.println("Los datos ingresados son correctos?");
+            System.out.println("1: Si son correctos");
+            System.out.println("2: No son correctos");
+            check = sc.nextInt();
+            if(check == 2){
+                System.out.println("Ingrese los datos nuevamente");
+            }
+        }while(check == 2);
+        
+        pd.insertar(p);
+        return pd.obtenerId(p.getNombre());
+    }
+
+    public static void listarPersonas(){
+        List<Persona> personas = pd.obtenerTodo();
         for(Persona p: personas){
             System.out.println("id:"+p.getId()+" "+p);
         }
