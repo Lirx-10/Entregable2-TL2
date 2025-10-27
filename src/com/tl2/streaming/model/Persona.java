@@ -15,6 +15,10 @@ public class Persona {
         this.edad = edad;
     }
 
+    @Override
+    public String toString(){
+        return "Nombre: "+nombre+" Apellido: "+apellido+" DNI: "+DNI+" Edad: "+edad;
+    }
     public int getId(){
         return id;
     }
@@ -46,8 +50,5 @@ public class Persona {
         this.edad = edad;
     }
     
-    @Override
-    public String toString(){
-        return this.nombre +" "+ this.apellido +" "+ this.DNI +" "+ this.edad;
-    }
+    
 }

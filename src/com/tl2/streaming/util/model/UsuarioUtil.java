@@ -2,6 +2,7 @@ package com.tl2.streaming.util.model;
 
 // Librerias java
 import java.util.Scanner;
+import java.util.ArrayList;
 import java.util.List;
 // Clases DAO
 import com.tl2.streaming.dao.FactoryDAO;
@@ -45,8 +46,7 @@ public final class UsuarioUtil {
             Persona p = PersonaUtil.ingresarPersona();
             PersonaDAO pd = FactoryDAO.getPersonaDAO();
             pd.insertar(p);
-            Persona per = pd.obtenerNombre(p.getNombre());
-            id = per.getId();
+            id = pd.obtenerId(p.getNombre());
         }else if (opcion == 2){
             //traemos las personas y seleccionamos
             PersonaDAO pd = FactoryDAO.getPersonaDAO();
@@ -61,45 +61,60 @@ public final class UsuarioUtil {
 
     public static void ingresarUsuario(){
         int id_persona;
+        Usuario u = new Usuario();
         do{
             id_persona = seleccionarPersona();
             if(id_persona == 0){
                 System.out.println("Persona no encontrada, ingrese un id valido");
             }
         }while(id_persona==0);
-        Usuario u = new Usuario();
         u.setId(id_persona);
-
-        System.out.println("Ingrese el nombre de usuario: ");
-        String nombreUsuario = sc.nextLine().trim();
-        u.setNombreUsuario(nombreUsuario);
-
-        String email;
-        do{
-            System.out.println("Ingrese su email: ");
-            email = sc.nextLine().trim();
-            if (verificarEmail(email)==false){
-                System.out.println("Ingrese el email nuevamente con formato xxx@yyy");
-            }else{
-                u.setEmail(email);
-            }
-        } while(verificarEmail(email) == false);
-
-        String contrasenia;
-        do{
-            System.out.println("Ingrese su contraseña: ");
-            contrasenia = sc.nextLine().trim();
-            if (verificarContrasenia(contrasenia)==true){
-                u.setContrasenia(contrasenia);
-            }
-        }while(verificarContrasenia(contrasenia)==false);
         
+        int check;
+        do{
+            System.out.println("Ingrese el nombre de usuario: ");
+            String nombreUsuario = sc.nextLine().trim();
+            u.setNombreUsuario(nombreUsuario);
+
+            String email;
+            do{
+                System.out.println("Ingrese su email: ");
+                email = sc.nextLine().trim();
+                if (verificarEmail(email)==false){
+                    System.out.println("Ingrese el email nuevamente con formato xxx@yyy");
+                }else{
+                    u.setEmail(email);
+                }
+            } while(verificarEmail(email) == false);
+
+            String contrasenia;
+            do{
+                System.out.println("Ingrese su contraseña: ");
+                contrasenia = sc.nextLine().trim();
+                if (verificarContrasenia(contrasenia)==true){
+                    u.setContrasenia(contrasenia);
+                }
+            }while(verificarContrasenia(contrasenia)==false);
+        
+            System.out.println(u);
+            System.out.println("Los datos ingresados son correctos?");
+            System.out.println("1: Si son correctos");
+            System.out.println("2: No son correctos");
+            check = sc.nextInt();
+            if(check == 2){
+                System.out.println("Ingrese los datos nuevamente");
+            }
+            sc.nextLine();
+        }while(check == 2);   
+
         UsuarioDAO ud = FactoryDAO.getUsuarioDAO();
         ud.insertar(u);
 
     }
-    
-    public static void listarUsuarios(List<Usuario> usuarios){
+
+    public static void listarUsuarios(){
+        UsuarioDAO ud = FactoryDAO.getUsuarioDAO();
+        List<Usuario> usuarios = ud.obtenerTodo();
         usuarios.sort(new ComparadorNombre());
         System.out.println("Ahora se imprimen todos los usuarios");
         for (Usuario u: usuarios){
@@ -107,4 +122,9 @@ public final class UsuarioUtil {
         }
     }
 
+    public static Usuario verificarUsuario(String nombreUsuario, String contrasenia){
+        Usuario u = new Usuario();
+        UsuarioDAO ud = FactoryDAO.getUsuarioDAO();   
+        return u;
+    }
 }

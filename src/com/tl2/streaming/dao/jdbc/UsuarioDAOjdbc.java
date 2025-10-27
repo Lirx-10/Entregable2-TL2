@@ -20,22 +20,33 @@ public class UsuarioDAOjdbc implements UsuarioDAO {
             "values (?,?,?,?)";
         try {
             Connection conn = MyConnection.getConnection();
-            PreparedStatement stmt = conn.prepareStatement(query);
-            stmt.setString(1, a.getNombreUsuario());
-            stmt.setString(2, a.getEmail());
-            stmt.setString(3, a.getContrasenia());
-            stmt.setInt(4, a.getId());
-            stmt.executeUpdate();
-            System.out.println("Usuario insertado correctamente");
+            try(PreparedStatement stmt = conn.prepareStatement(query)){
+                stmt.setString(1, a.getNombreUsuario());
+                stmt.setString(2, a.getEmail());
+                stmt.setString(3, a.getContrasenia());
+                stmt.setInt(4, a.getId());
+                stmt.executeUpdate();
+                System.out.println("Usuario insertado correctamente");
+            }
         } catch (SQLException e) {
             System.out.println("Error al insertar Usuario "+ e.getMessage());
         }
     }
 
     @Override
-    public void modificar(Usuario a) {
+    public void modificar(Usuario u) {
+        String query =                 
+                "UPDATE USUARIO SET NOMBRE_USUARIO = ?, EMAIL = ?, CONTRASEÑA = ?"+
+                "WHERE ID = ?";
         try {
             Connection conn = MyConnection.getConnection();
+            try(PreparedStatement stmt = conn.prepareStatement(query)){
+                stmt.setInt(4, u.getId());
+                stmt.setString(1, u.getNombreUsuario());
+                stmt.setString(2, u.getEmail());
+                stmt.setString(3, u.getContrasenia());
+                stmt.executeUpdate();
+            }
         } catch (SQLException e) {
             System.out.println("Error al modificar Usuario "+ e.getMessage());
         }
@@ -43,24 +54,38 @@ public class UsuarioDAOjdbc implements UsuarioDAO {
 
     @Override
     public void eliminar(int id) {
-        //try {
-            //Connection conn = MyConnection.getConnection();
-        //} catch (SQLException e) {
-          //  System.out.println("Error al eliminar un Usuario "+e.getMessage());
-        //}
+        String query = "DELETE FROM USUARIO WHERE ID = ?";
+        try {
+            Connection conn = MyConnection.getConnection();
+            try (PreparedStatement stmt = conn.prepareStatement(query)){
+                stmt.setInt(1, id);
+                stmt.executeUpdate();
+            }
+        } catch (SQLException e) {
+            System.out.println("Error al eliminar un Usuario "+e.getMessage());
+        }
     }
     
     @Override
     public Usuario obtener(int id) {
         Usuario user = new Usuario();
-        //try {
-            //Connection conn = MyConnection.getConnection();
-            //String query = "SELECT * FROM USUARIO";
-            //PreparedStatement stmt = conn.prepareStatement(query);
-            
-        //} catch (Exception e) {
-            // TODO: handle exception
-        //}
+        String query = "SELECT * FROM USUARIO WHERE ID = ?";
+        try {
+            Connection conn = MyConnection.getConnection();
+            try(PreparedStatement stmt = conn.prepareStatement(query);){
+                stmt.setInt(1,id);
+                try(ResultSet rs = stmt.executeQuery()){
+                    if(rs.next()){
+                        user.setNombreUsuario(rs.getString("NOMBRE_USUARIO"));
+                        user.setEmail(rs.getString("EMAIL"));
+                        user.setContrasenia(rs.getString("CONTRASEÑA"));    
+                        user.setIdPersona(rs.getInt("ID_PERSONA"));
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("Error al obtener Usuario "+e.getMessage());
+        }
         return user;
     }
     
@@ -70,18 +95,16 @@ public class UsuarioDAOjdbc implements UsuarioDAO {
         String query = "SELECT * FROM USUARIO";
         try {
             Connection conn = MyConnection.getConnection();
-            PreparedStatement stmt = conn.prepareStatement(query);
-            ResultSet rs = stmt.executeQuery();
-
-            while (rs.next()){
-                Usuario user = new Usuario();
-                user.setId(rs.getInt(1));
-                user.setNombreUsuario(rs.getString(2));
-                user.setContrasenia(rs.getString(3));
-                user.setEmail(rs.getString(4));
-                user.setId(rs.getInt(5));
-                
-                usuarios.add(user);
+            try(PreparedStatement stmt = conn.prepareStatement(query);
+            ResultSet rs = stmt.executeQuery()){
+                while (rs.next()){
+                    Usuario user = new Usuario();
+                    user.setId(rs.getInt(1));                        user.setNombreUsuario(rs.getString(2));
+                    user.setEmail(rs.getString(3));
+                    user.setContrasenia(rs.getString(4));
+                    user.setId(rs.getInt(5));
+                    usuarios.add(user);
+                }
             }
         } catch (SQLException e) {
             System.out.println("Error al obtener todos los usuarios "+e.getMessage());

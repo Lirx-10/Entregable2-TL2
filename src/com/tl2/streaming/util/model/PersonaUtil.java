@@ -27,73 +27,83 @@ public final class PersonaUtil {
         return !p.existeDNI(DNI);
     }
 
-    //hola! isla de la poronga?? acá hay una malcogida...
     public static Persona ingresarPersona(){
         Persona p = new Persona();
-        
-        String nombre;
+        int check = 2;
         do{
-            System.out.println("Ingrese su nombre: ");
-            // .trim() quita los espacios en blanco "   Leo   " --> "Leo"
-            nombre = sc.nextLine().trim();
-            if(!validarNombre(nombre)){
-                System.out.println("Error: El nombre posee numeros o está vacío");
-                System.out.println("El nombre solo debe de poseer letras");
-            }
-        }while(!validarNombre(nombre));
-        p.setNombre(nombre);
-
-        String apellido;
-        do{
-            System.out.println("Ingrese su apellido: ");
-            apellido = sc.nextLine().trim();
-            if(!validarNombre(apellido)){
-                System.out.println("Error: El nombre posee numeros");
-                System.out.println("El nombre solo debe de poseer letras");
-            }
-        }while(!validarNombre(apellido));
-        p.setApellido(apellido);
-
-        int DNI;
-        boolean valido=false;
-        do{ 
-            System.out.println("Ingrese su DNI: ");
-            // try catch, para manejar la excepcion de ingresar un valor que no sea un entero
-            try {
-                DNI = sc.nextInt();
-                if(validarDNI(DNI)==false){
-                    System.out.println("Error: Ya existe una persona con el mismo DNI");
-                    System.out.println("Ingrese un dni no existente? xd");
-                } else {
-                    valido = true;
-                    p.setDNI(DNI);
+            String nombre;
+            do{
+                System.out.println("Ingrese su nombre: ");
+                // .trim() quita los espacios en blanco "   Leo   " --> "Leo"
+                nombre = sc.nextLine().trim();
+                if(!validarNombre(nombre)){
+                    System.out.println("Error: El nombre posee numeros o está vacío");
+                    System.out.println("El nombre solo debe de poseer letras");
                 }
-            } catch (InputMismatchException e) {
-                System.out.println("Ingresar un número válido");
-                sc.nextLine();//limpiar buffer
-            }
-            
-        }while(valido == false);
-        
-        int edad;
-        valido = false;
-        do{
-            System.out.println("Ingrese su edad: ");
-            try {
-                edad = sc.nextInt();
-                p.setEdad(edad);
-                valido = true;
-            } catch (InputMismatchException e) {
-                System.out.println("Ingresar un número entero válido");
-                sc.nextLine();//limpiar buffer
-            }
-            
-        }while(valido == false);
+            }while(!validarNombre(nombre));
+            p.setNombre(nombre);
 
+            String apellido;
+            do{
+                System.out.println("Ingrese su apellido: ");
+                apellido = sc.nextLine().trim();
+                if(!validarNombre(apellido)){
+                    System.out.println("Error: El nombre posee numeros");
+                    System.out.println("El nombre solo debe de poseer letras");
+                }
+            }while(!validarNombre(apellido));
+            p.setApellido(apellido);
+
+            int DNI;
+            boolean valido=false;
+            do{ 
+                System.out.println("Ingrese su DNI: ");
+                // try catch, para manejar la excepcion de ingresar un valor que no sea un entero
+                try {
+                    DNI = sc.nextInt();
+                    if(validarDNI(DNI)==false){
+                        System.out.println("Error: Ya existe una persona con el mismo DNI");
+                        System.out.println("Ingrese un dni no existente? xd");
+                    } else {
+                        valido = true;
+                        p.setDNI(DNI);
+                    }
+                } catch (InputMismatchException e) {
+                    System.out.println("Ingresar un número válido");
+                    sc.nextLine();//limpiar buffer
+                }
+            }while(valido == false);
+        
+            int edad;
+            valido = false;
+            do{
+                System.out.println("Ingrese su edad: ");
+                try {
+                    edad = sc.nextInt();
+                    p.setEdad(edad);
+                    valido = true;
+                } catch (InputMismatchException e) {
+                    System.out.println("Ingresar un número entero válido");
+                    sc.nextLine();//limpiar buffer
+                }
+            }while(valido == false);
+
+            System.out.println(p);
+            System.out.println("Los datos ingresados son correctos?");
+            System.out.println("1: Si son correctos");
+            System.out.println("2: No son correctos");
+            check = sc.nextInt();
+            if(check == 2){
+                System.out.println("Ingrese los datos nuevamente");
+            }
+        }while(check == 2);
+    
         return p;
     }
 
-    public static void listarPersonas(List<Persona> personas){
+    public static void listarPersonas(){
+        PersonaDAO up = FactoryDAO.getPersonaDAO();
+        List<Persona> personas = up.obtenerTodo();
         for(Persona p: personas){
             System.out.println("id:"+p.getId()+" "+p);
         }
