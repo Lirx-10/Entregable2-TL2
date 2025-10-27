@@ -21,6 +21,8 @@ public final class UsuarioUtil {
     private UsuarioUtil(){}
 
     private static final Scanner sc = new Scanner(System.in);
+    private static final UsuarioDAO ud = FactoryDAO.getUsuarioDAO();
+    private static final PersonaDAO pd = FactoryDAO.getPersonaDAO();
 
     public static boolean verificarEmail(String email){
         return email.matches("^\\w+@\\w+\\.\\w+$");
@@ -43,15 +45,10 @@ public final class UsuarioUtil {
         int id = 0;
         if (opcion == 1){
             // Agregamos una persona nueva
-            Persona p = PersonaUtil.ingresarPersona();
-            PersonaDAO pd = FactoryDAO.getPersonaDAO();
-            pd.insertar(p);
-            id = pd.obtenerId(p.getNombre());
+            id = PersonaUtil.ingresarPersona();
         }else if (opcion == 2){
             //traemos las personas y seleccionamos
-            PersonaDAO pd = FactoryDAO.getPersonaDAO();
-            List<Persona> personas = pd.obtenerTodo();
-            PersonaUtil.listarPersonas(personas);
+            PersonaUtil.listarPersonas();
             System.out.println("Ingrese el id de la persona que quiere usar");
             id = sc.nextInt();
         }
@@ -106,14 +103,10 @@ public final class UsuarioUtil {
             }
             sc.nextLine();
         }while(check == 2);   
-
-        UsuarioDAO ud = FactoryDAO.getUsuarioDAO();
         ud.insertar(u);
-
     }
 
     public static void listarUsuarios(){
-        UsuarioDAO ud = FactoryDAO.getUsuarioDAO();
         List<Usuario> usuarios = ud.obtenerTodo();
         usuarios.sort(new ComparadorNombre());
         System.out.println("Ahora se imprimen todos los usuarios");
@@ -124,7 +117,10 @@ public final class UsuarioUtil {
 
     public static Usuario verificarUsuario(String nombreUsuario, String contrasenia){
         Usuario u = new Usuario();
-        UsuarioDAO ud = FactoryDAO.getUsuarioDAO();   
+        int id = ud.validarUsuario(nombreUsuario, contrasenia);
+        if (id == 0){
+            System.out.println("El usuario ingresado no existe");
+        }
         return u;
     }
 }

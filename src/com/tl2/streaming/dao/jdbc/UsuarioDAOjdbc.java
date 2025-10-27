@@ -92,17 +92,25 @@ public class UsuarioDAOjdbc implements UsuarioDAO {
     @Override
     public List<Usuario> obtenerTodo() {
         List<Usuario> usuarios = new ArrayList<>();
-        String query = "SELECT * FROM USUARIO";
+        
+        String query = "SELECT U.ID, U.NOMBRE_USUARIO, U.EMAIL, U.CONTRASEÑA, U.ID_PERSONA, "+
+                    "P.NOMBRE, P.APELLIDO, P.DNI, P.EDAD "+
+                    "FROM USUARIO U INNER JOIN PERSONA P ON P.ID = U.ID_PERSONA";
         try {
             Connection conn = MyConnection.getConnection();
             try(PreparedStatement stmt = conn.prepareStatement(query);
             ResultSet rs = stmt.executeQuery()){
                 while (rs.next()){
                     Usuario user = new Usuario();
-                    user.setId(rs.getInt(1));                        user.setNombreUsuario(rs.getString(2));
-                    user.setEmail(rs.getString(3));
-                    user.setContrasenia(rs.getString(4));
-                    user.setId(rs.getInt(5));
+                    user.setId(rs.getInt("ID"));
+                    user.setNombreUsuario(rs.getString("NOMBRE_USUARIO"));
+                    user.setEmail(rs.getString("EMAIL"));
+                    user.setContrasenia(rs.getString("CONTRASEÑA"));
+                    user.setIdPersona(rs.getInt("ID_PERSONA"));
+                    user.setNombre(rs.getString("NOMBRE"));
+                    user.setApellido(rs.getString("APELLIDO"));
+                    user.setDNI(rs.getInt("DNI"));
+                    user.setEdad(rs.getInt("EDAD"));
                     usuarios.add(user);
                 }
             }
@@ -111,4 +119,26 @@ public class UsuarioDAOjdbc implements UsuarioDAO {
         }
         return usuarios;
     }
+
+    @Override
+    public int validarUsuario(String u, String c){
+        String query = "SELECT ID FROM USUARIO WHERE NOMBRE = ?, CONTRASEÑA = ?";
+        int id = 0;
+        try {
+            Connection conn = MyConnection.getConnection();
+            try(PreparedStatement stmt = conn.prepareStatement(query)){
+                stmt.setString(1, u);
+                stmt.setString(2, c);
+                try(ResultSet rs = stmt.executeQuery()){
+                    if(rs.next()){
+                        id = rs.getInt("ID");
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("Error al validar el usuario "+e.getMessage());
+        }
+        return id;
+    }
+
 }

@@ -134,9 +134,6 @@ public class PersonaDAOjdbc implements PersonaDAO{
         } catch (SQLException e) {
             System.out.println("Hubo un error "+ e.getMessage());
         }
-        if (id == 0){
-            System.out.println("El usuario no existe");
-        }
         return id;
     }
 
