@@ -54,7 +54,6 @@ public class Pelicula {
 				"\n\tDirector: " + director +
 				"\n\tGenero: " + genero +
 				"\n\tDuracion: " + duracion +
-				"\n\tResumen: " + resumen +
-				"\n";
+				"\n\tResumen: " + resumen + "\n";
 	}
 }

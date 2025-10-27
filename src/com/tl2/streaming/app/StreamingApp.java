@@ -1,18 +1,16 @@
 package com.tl2.streaming.app;
 
 import java.util.Scanner;
-import com.tl2.streaming.dao.*;
-import com.tl2.streaming.util.*;
-import com.tl2.streaming.model.*;
-import com.tl2.streaming.util.MyConnection;
 import com.tl2.streaming.util.model.PeliculaUtil;
 import com.tl2.streaming.util.model.PersonaUtil;
 import com.tl2.streaming.util.model.ReseniaUtil;
+import com.tl2.streaming.util.model.UsuarioUtil;
 
 public class StreamingApp{
     public static void main(String[] args) { int opcion;
     	Scanner sc = new Scanner(System.in);
     	do {
+    		limpiarConsola();
 	        System.out.println("\n=== MENÚ PRINCIPAL ===");
 	        System.out.println("1. Registrar Persona");
 	        System.out.println("2. Registrar Usuario");
@@ -27,17 +25,20 @@ public class StreamingApp{
 	        sc.nextLine(); // limpiar buffer
 	
 	        switch (opcion) {
-	            case 1 -> registrarPersona();
-	            case 2 -> registrarUsuario();
-	            case 3 -> registrarPelicula();
-	            case 4 -> listarUsuarios();
-	            case 5 -> listarPeliculas();
-	            case 6 -> registrarResenia();
-	            case 7 -> aprobarResenia();
+	            case 1 -> PersonaUtil.registrarPersona();
+	            case 2 -> UsuarioUtil.registrarUsuario();
+	            case 3 -> PeliculaUtil.registrarPelicula();
+	            case 4 -> UsuarioUtil.listarUsuarios();
+	            case 5 -> PeliculaUtil.listarPeliculasEnOrden();
+	            case 6 -> ReseniaUtil.registrarResenia();
+	            case 7 -> ReseniaUtil.aprobarResenia();
 	            case 0 -> System.out.println("Saliendo del sistema...");
 	            default -> System.out.println("Opción inválida. Intente nuevamente.");
 	        }
+	        System.out.print("Presione ENTER para continuar...");
+	        sc.nextLine();
 	    } while (opcion != 0);
+    	sc.close();
     }
     
     public static void limpiarConsola() {

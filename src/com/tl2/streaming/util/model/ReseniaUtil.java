@@ -17,57 +17,69 @@ import com.tl2.streaming.util.*;
 public final class ReseniaUtil {
 	private static ReseniaDAO reseniaDAO = FactoryDAO.getReseniaDAO();
 	private static UsuarioDAO usuarioDAO = FactoryDAO.getUsuarioDAO();
+	private static Scanner sc = new Scanner(System.in);
 	private ReseniaUtil() {
 	}
 	
-	private static int obtenerInt(Scanner sc) {
+	private static int obtenerInt() {
 		boolean valido = false;
 		int i = 0;
 		while (!valido) {
 			try {
                 i = sc.nextInt();
                 valido = true;  // Si llega aquí, es un entero válido
+//                sc.nextLine();  // Limpiar el buffer del scanner
             }
 			catch (InputMismatchException e) {
                 System.out.println("Error: debe ingresar un número entero.");
-                sc.nextLine();  // Limpiar el buffer del scanner
+//                sc.nextLine();  // Limpiar el buffer del scanner
             }
+			sc.nextLine();
 		}
 		return i;
 	}
-	private static boolean confirmar(Scanner sc) {
+	private static boolean confirmar() {
 		 String respuesta;
-		 sc.nextLine();
 	     do {
 	    	 System.out.print("¿Deseas confirmar la operación? (S/N): ");
 	    	 respuesta = sc.nextLine().trim().toUpperCase();
 	     } while (!respuesta.equals("S") && !respuesta.equals("N"));
-	     if(respuesta.equals("S")) return true;
-	     else return false;
+	     if(respuesta.equals("S")) {
+	    	 System.out.println("Operación confirmada.");
+	    	 return true;
+	     }
+	     else{
+	    	 System.out.println("Operación cancelada.");
+	    	 return false;
+	     }
 	}
-	public static void registrarResenia(ReseniaDAO reseniaDAO, PeliculaDAO peliculaDAO) {
-    	Usuario u = verificarUsuario();
-		Scanner sc = new Scanner(System.in);
-		Resenia nue = new Resenia();
-		if(u == null) {
+	public static void registrarResenia() {
+		System.out.println("Ingrese su nombre de usuario: ");
+		String nombre = sc.nextLine().trim();
+		System.out.println("Ingrese la contraseña: ");
+		String contrasenia = sc.nextLine().trim();
+		int idUsuario = PersonaUtil.validarUsuario(nombre, contrasenia);
+		if(idUsuario == 0) {
 			System.out.println("Usuario no válido. Registro de reseña cancelado.");
-			sc.close();
 			return;
 		}
+		Resenia nue = new Resenia();
+    	Usuario u = new Usuario();
+    	u.setId(idUsuario);
 		List<Pelicula> peliculas = PeliculaUtil.obtenerPeliculas();
 		PeliculaUtil.mostrarTitulos(peliculas);
 		System.out.print("Seleccione el número de la película a la cual desea hacer una reseña: ");
-		int pos = obtenerInt(sc);
+		int pos = obtenerInt();
 		while(pos < 0 || pos >= peliculas.size()) {
 			System.out.println("Error: debe ingresar un número entre 0 y " + peliculas.size());
-			pos = obtenerInt(sc);
+			pos = obtenerInt();
 		}
 		nue.setPelicula(peliculas.get(pos));
 		System.out.println("Ingrese la calificación (1-5):");
-		int cal = obtenerInt(sc);
+		int cal = obtenerInt();
 		while (cal < 1 || cal > 5) {
 			System.out.println("Error: ingrese una valor entre 1 y 5.");
-			cal = obtenerInt(sc);
+			cal = obtenerInt();
 		}
 		nue.setCalificacion(cal);
 		System.out.println("Ingrese el comentario:");
@@ -75,15 +87,14 @@ public final class ReseniaUtil {
 		nue.setAprobado(0); // Por defecto no aprobado
 		nue.setFecha_hora(Instant.now());
 		nue.setUsuario(u);
-		if(confirmar(sc)) reseniaDAO.insertar(nue);
-		sc.close();
+		if(confirmar()) reseniaDAO.insertar(nue);
     }
 	public static List<Resenia> obtenerResenias(){
 		List<Resenia> lista = reseniaDAO.obtenerTodo();
-//		for(Resenia r : lista) {
-//			int idUsuario = r.getUsuario().getId();
-//			r.setUsuario(usuarioDAO.obtener(idUsuario));
-//		}
+		for(Resenia r : lista) {
+			int idUsuario = r.getUsuario().getId();
+			r.setUsuario(usuarioDAO.obtener(idUsuario));
+		}
 		return lista;
 	}
 	public static void mostrarReseniasNoAprobadas(List<Resenia> resenias) {
@@ -101,31 +112,27 @@ public final class ReseniaUtil {
 		}
 		return null;
 	}
-	public static void aprobarResenia() {
-		Scanner sc = new Scanner(System.in);				
+	public static void aprobarResenia() {			
 		List<Resenia> resenias = obtenerResenias();
 		mostrarReseniasNoAprobadas(resenias);
 		System.out.print("Seleccione el ID de la reseña que desea aprobar: ");
-		int id = obtenerInt(sc);
+		int id = obtenerInt();
 		Resenia re = buscarResenia(id, resenias);
 		if(re == null) {
 			System.out.println("No se encontró la reseña ");
-			sc.close();
 			return;
 		}
 		if(re.getAprobado() != 0) {
 			System.out.println("La reseña seleccionada ya esta aprobada.");
-			sc.close();
 			return;
 		}
 		else {
 			System.out.println(re);
-			boolean conf = confirmar(sc);
+			boolean conf = confirmar();
 			if(conf) {
 				re.setAprobado(1);
 				reseniaDAO.modificar(re);
 			}
-			sc.close();
 		}
 	}
 }
