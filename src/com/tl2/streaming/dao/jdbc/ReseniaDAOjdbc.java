@@ -16,7 +16,7 @@ public class ReseniaDAOjdbc implements ReseniaDAO{
 			List<Resenia> resenias = new LinkedList<Resenia>();
     		try (Statement stmt = conn.createStatement()) {
 				String sql = "SELECT r.id, r.calificacion, r.comentario, r.aprobado, r.fecha_hora,"
-						+ " p.id AS pelicula_id, p.genero, p.titulo, p.resumen, p.director, p.duracion"
+						+ " p.id AS id_pelicula, p.genero, p.titulo, p.resumen, p.director, p.duracion, r.id_usuario"
 						+ " FROM resenia r INNER JOIN pelicula p ON r.id_pelicula = p.id;";
 				try (ResultSet rs = stmt.executeQuery(sql)) {
 					while (rs.next()) {
@@ -38,6 +38,9 @@ public class ReseniaDAOjdbc implements ReseniaDAO{
 						p.setDirector(rs.getString(10));
 						p.setDuracion(rs.getDouble(11));
 						r.setPelicula(p);
+						Usuario u = new Usuario();
+						u.setId(rs.getInt(12));
+						r.setUsuario(u);
 						resenias.add(r);
 					}
 				}
@@ -57,7 +60,7 @@ public class ReseniaDAOjdbc implements ReseniaDAO{
 			Resenia r = null;
 			try (Statement stmt = conn.createStatement()) {
 				String sql = "SELECT r.id, r.calificacion, r.comentario, r.aprobado, r.fecha_hora,"
-						+ " p.id AS pelicula_id, p.genero, p.titulo, p.resumen, p.director, p.duracion"
+						+ " p.id AS id_pelicula, p.genero, p.titulo, p.resumen, p.director, p.duracion"
 						+ " FROM resenia r INNER JOIN pelicula p ON r.id_pelicula = p.id WHERE r.id = "+id+ ";";
 				try (ResultSet rs = stmt.executeQuery(sql)) {
 					if (rs.next()) {

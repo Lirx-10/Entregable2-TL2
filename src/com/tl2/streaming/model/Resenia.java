@@ -58,7 +58,7 @@ public class Resenia {
 	}
 	@Override
 	public String toString() {
-		return "Resenia [id=" + id + ", calificacion=" + calificacion + ", comentario=" + comentario + ", aprobado="
-				+ aprobado + ", fecha_hora=" + fecha_hora + ",\npelicula=\n" + pelicula + "]";
+		return "Reseña ID = " + id + "\nCalificación = " + calificacion + "\nComentario = " + comentario + "\nAprobado = "
+				+ aprobado + "\nFecha_hora = " + fecha_hora + "\nID_Usuario = " + usuario.getId() + "\npelicula = ID" + pelicula;
 	}
 }
