@@ -1,15 +1,15 @@
 package com.tl2.streaming.model;
 
-public class Usuario extends Persona{
-    private int id_usuario;
+public class Usuario{
+    private int id;
     private String nombreUsuario;
     private String contrasenia;
     private String email;
+    private Persona persona;
 
     public Usuario(){}
     
     public Usuario(String nombre, String apellido, int DNI, int edad,String nombreUsuario,String email,String contrasenia){
-        super(nombre,apellido,DNI,edad);
         this.nombreUsuario = nombreUsuario;
         this.email = email;
         this.contrasenia = contrasenia;
@@ -20,11 +20,19 @@ public class Usuario extends Persona{
         return super.toString()+" Nombre de usuario: "+nombreUsuario+" Email: "+email +" Contraseña: "+contrasenia;
     }
 
+    public void setPersona(Persona persona){
+        this.persona = persona;
+    }
+
+    public Persona getPersona(){
+        return persona;
+    }
+
     public int getId() {
-        return id_usuario;
+        return id;
     }
     public void setId(int id) {
-        this.id_usuario = id;
+        this.id = id;
     }
     public String getNombreUsuario() {
         return nombreUsuario;

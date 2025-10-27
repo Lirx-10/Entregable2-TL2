@@ -2,19 +2,15 @@ package com.tl2.streaming.util.model;
 
 // Librerias java
 import java.util.Scanner;
-import java.util.ArrayList;
 import java.util.List;
 // Clases DAO
 import com.tl2.streaming.dao.FactoryDAO;
-import com.tl2.streaming.dao.PersonaDAO;
 import com.tl2.streaming.dao.UsuarioDAO;
-import com.tl2.streaming.dao.jdbc.PersonaDAOjdbc;
 // Clases Modelo
-import com.tl2.streaming.model.Persona;
+
 import com.tl2.streaming.model.Usuario;
 //Clases Util
 import com.tl2.streaming.util.comparators.ComparadorNombre;
-import com.tl2.streaming.util.model.PersonaUtil;
 
 public final class UsuarioUtil {
 
@@ -22,7 +18,6 @@ public final class UsuarioUtil {
 
     private static final Scanner sc = new Scanner(System.in);
     private static final UsuarioDAO ud = FactoryDAO.getUsuarioDAO();
-    private static final PersonaDAO pd = FactoryDAO.getPersonaDAO();
 
     public static boolean verificarEmail(String email){
         return email.matches("^\\w+@\\w+\\.\\w+$");
@@ -111,6 +106,7 @@ public final class UsuarioUtil {
         usuarios.sort(new ComparadorNombre());
         System.out.println("Ahora se imprimen todos los usuarios");
         for (Usuario u: usuarios){
+            System.out.println(u.getPersona());
             System.out.println(u);
         }
     }

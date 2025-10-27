@@ -6,7 +6,6 @@ public class Persona {
     private String apellido;
     private int DNI;
     private int edad;
-    private int id_persona;
     
     public Persona(){}
     public Persona(String n, String a, int DNI, int edad){
@@ -49,12 +48,5 @@ public class Persona {
     }
     public void setEdad(int edad) {
         this.edad = edad;
-    }
-    
-    public int getId_persona() {
-        return id_persona;
-    }
-    public void setId_persona(int id_persona) {
-        this.id_persona = id_persona;
     }
 }
