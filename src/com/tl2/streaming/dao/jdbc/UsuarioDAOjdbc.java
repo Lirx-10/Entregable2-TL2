@@ -17,7 +17,7 @@ public class UsuarioDAOjdbc implements UsuarioDAO {
     @Override
     public void insertar(Usuario a) {
         String query = 
-            "INSERT INTO USUARIO (NOMBRE_USUARIO, EMAIL, CONTRASEÑA, ID_PERSONA)"+
+            "INSERT INTO USUARIO (NOMBRE_USUARIO, EMAIL, CONTRASENIA, ID_PERSONA)"+
             "values (?,?,?,?)";
         try {
             Connection conn = MyConnection.getConnection();
@@ -37,7 +37,7 @@ public class UsuarioDAOjdbc implements UsuarioDAO {
     @Override
     public void modificar(Usuario u) {
         String query =                 
-                "UPDATE USUARIO SET NOMBRE_USUARIO = ?, EMAIL = ?, CONTRASEÑA = ?"+
+                "UPDATE USUARIO SET NOMBRE_USUARIO = ?, EMAIL = ?, CONTRASENIA = ? "+
                 "WHERE ID = ?";
         try {
             Connection conn = MyConnection.getConnection();
@@ -70,7 +70,7 @@ public class UsuarioDAOjdbc implements UsuarioDAO {
     @Override
     public Usuario obtener(int id) {
         Usuario user = new Usuario();
-        String query = "SELECT * FROM USUARIO WHERE ID = ?";
+        String query = "SELECT * FROM USUARIO WHERE ID = " + id + ";";
         try {
             Connection conn = MyConnection.getConnection();
             try(PreparedStatement stmt = conn.prepareStatement(query);){
@@ -80,8 +80,8 @@ public class UsuarioDAOjdbc implements UsuarioDAO {
                     	Persona p = new Persona();
                         user.setNombreUsuario(rs.getString("NOMBRE_USUARIO"));
                         user.setEmail(rs.getString("EMAIL"));
-                        user.setContrasenia(rs.getString("CONTRASEÑA"));    
-                        p.setId = rs.getInt("ID_PERSONA");
+                        user.setContrasenia(rs.getString("CONTRASENIA"));    
+                        p.setId(rs.getInt("ID_PERSONA"));
                         user.setPersona(p);
                     }
                 }
@@ -96,9 +96,9 @@ public class UsuarioDAOjdbc implements UsuarioDAO {
     public List<Usuario> obtenerTodo() {
         List<Usuario> usuarios = new ArrayList<>();
         
-        String query = "SELECT U.ID, U.NOMBRE_USUARIO, U.EMAIL, U.CONTRASEÑA, U.ID_PERSONA, "+
+        String query = "SELECT U.ID, U.NOMBRE_USUARIO, U.EMAIL, U.CONTRASENIA, P.ID AS ID_PERSONA, "+
                     "P.NOMBRE, P.APELLIDO, P.DNI, P.EDAD "+
-                    "FROM USUARIO U INNER JOIN PERSONA P ON P.ID = U.ID_PERSONA";
+                    "FROM USUARIO U INNER JOIN PERSONA P ON U.ID_PERSONA = P.ID";
         try {
             Connection conn = MyConnection.getConnection();
             try(PreparedStatement stmt = conn.prepareStatement(query);
@@ -109,7 +109,7 @@ public class UsuarioDAOjdbc implements UsuarioDAO {
                     user.setId(rs.getInt("ID"));
                     user.setNombreUsuario(rs.getString("NOMBRE_USUARIO"));
                     user.setEmail(rs.getString("EMAIL"));
-                    user.setContrasenia(rs.getString("CONTRASEÑA"));
+                    user.setContrasenia(rs.getString("CONTRASENIA"));
                     p.setId(rs.getInt("ID_PERSONA"));
                     p.setNombre(rs.getString("NOMBRE"));
                     p.setApellido(rs.getString("APELLIDO"));
@@ -127,7 +127,7 @@ public class UsuarioDAOjdbc implements UsuarioDAO {
 
     @Override
     public int validarUsuario(String u, String c){
-        String query = "SELECT ID FROM USUARIO WHERE NOMBRE = ?, CONTRASEÑA = ?";
+        String query = "SELECT ID FROM USUARIO WHERE NOMBRE_USUARIO = ? AND CONTRASENIA = ?;";
         int id = 0;
         try {
             Connection conn = MyConnection.getConnection();

@@ -71,7 +71,7 @@ public final class UsuarioUtil {
             String email;
             do{
                 System.out.println("Ingrese su email: ");
-                email = sc.nextLine().trim();
+                email = sc.nextLine().trim().toLowerCase();
                 if (verificarEmail(email)==false){
                     System.out.println("Ingrese el email nuevamente con formato xxx@yyy");
                 }else{
@@ -93,6 +93,9 @@ public final class UsuarioUtil {
             System.out.println("1: Si son correctos");
             System.out.println("2: No son correctos");
             check = sc.nextInt();
+            while (check != 1 && check != 2) {
+            	System.out.println("Error: debe solo debe ingresar 1 o 2");
+            }
             if(check == 2){
                 System.out.println("Ingrese los datos nuevamente");
             }
@@ -106,8 +109,8 @@ public final class UsuarioUtil {
         usuarios.sort(new ComparadorNombre());
         System.out.println("Ahora se imprimen todos los usuarios");
         for (Usuario u: usuarios){
-            System.out.println(u.getPersona());
             System.out.println(u);
+            System.out.println("->" + u.getPersona());
         }
     }
 

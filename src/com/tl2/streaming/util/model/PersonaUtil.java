@@ -37,11 +37,10 @@ public final class PersonaUtil {
     public static int validarDNI(){
         int DNI=0;
         boolean valido=false;
-        do{ 
-            // try catch, para manejar la excepcion de ingresar un valor que no sea un entero
+        do{ // try catch, para manejar la excepcion de ingresar un valor que no sea un entero
             try {
                 DNI = sc.nextInt();
-                if(pd.existeDNI(DNI)==false){
+                if(pd.existeDNI(DNI)==true){
                     System.out.println("Error: Ya existe una persona con el mismo DNI");
                     System.out.println("Ingrese su DNI nuevamente");
                 } else {
@@ -49,9 +48,9 @@ public final class PersonaUtil {
                 }
             } catch (InputMismatchException e) {
                 System.out.println("Ingresar un número válido");
-                sc.nextLine();//limpiar buffer
             }
-        }while(valido == false);
+            sc.nextLine();//limpiar buffer
+        } while(valido == false);
         return DNI;
     }
 
@@ -83,7 +82,7 @@ public final class PersonaUtil {
             p.setApellido(validarNombre());
             System.out.println("Ingrese su DNI: ");
             p.setDNI(validarDNI()); 
-
+            p.setEdad(validarEdad());
             System.out.println(p);
             System.out.println("Los datos ingresados son correctos?");
             System.out.println("1: Si son correctos");

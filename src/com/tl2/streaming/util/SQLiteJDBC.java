@@ -35,7 +35,7 @@ public class SQLiteJDBC {
                 "ID INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,"+
                 "NOMBRE_USUARIO TEXT NOT NULL,"+
                 "EMAIL TEXT NOT NULL,"+
-                "CONTRASEÑA TEXT NOT NULL,"+
+                "CONTRASENIA TEXT NOT NULL,"+
                 "ID_PERSONA INTEGER NOT NULL,"+
                 "FOREIGN KEY (ID_PERSONA) REFERENCES PERSONA(ID)"+
                 ");";

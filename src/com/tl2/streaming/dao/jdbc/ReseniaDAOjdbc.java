@@ -98,12 +98,12 @@ public class ReseniaDAOjdbc implements ReseniaDAO{
     	try {
     		Connection conn = MyConnection.getConnection();
 			try (Statement stmt = conn.createStatement()) {
-				String sql = "INSERT INTO resenia (id_pelicula, id_usuario, calificacion, comentario, aprobado, fecha_hora) VALUES ("
-						+ a.getPelicula().getId() + ", "
-						+ a.getUsuario().getId() + ", "
-						+ a.getCalificacion() + ", '"
-						+ a.getComentario() + "', "
-						+ a.getAprobado() + ", '"
+				String sql = "INSERT INTO resenia (id_pelicula, id_usuario, calificacion, comentario, aprobado, fecha_hora) VALUES ('"
+						+ a.getPelicula().getId() + "', '"
+						+ a.getUsuario().getId() + "', '"
+						+ a.getCalificacion() + "', '"
+						+ a.getComentario() + "', '"
+						+ a.getAprobado() + "', '"
 						+ a.getFecha_hora() + "');";
 				stmt.executeUpdate(sql);
 			}

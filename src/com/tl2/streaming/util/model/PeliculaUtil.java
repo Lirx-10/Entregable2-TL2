@@ -2,15 +2,14 @@ package com.tl2.streaming.util.model;
 
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
 import com.tl2.streaming.dao.FactoryDAO;
 import com.tl2.streaming.dao.PeliculaDAO;
-import com.tl2.streaming.enumer.Generos;
 import com.tl2.streaming.model.Pelicula;
 import com.tl2.streaming.util.comparators.*;
+import com.tl2.streaming.util.Verificador;
 
 public final class PeliculaUtil {
 	private static PeliculaDAO peliculaDAO = FactoryDAO.getPeliculaDAO();
@@ -19,68 +18,7 @@ public final class PeliculaUtil {
 	private PeliculaUtil() {
 	}
 	
-	private static double obtenerDouble() {
-		boolean valido = false;
-		double i = 0;
-		while (!valido) {
-			try {
-                i = sc.nextDouble();
-                valido = true;  // Si llega aquí, es un entero válido
-            }
-			catch (InputMismatchException e) {
-                System.out.println("Error: debe ingresar un número con el formato [xx.xx].");
-            }
-			sc.nextLine();  // Limpiar el buffer del scanner
-		}
-		return i;
-	}
-	private static int obtenerInt() {
-		boolean valido = false;
-		int i = 0;
-		while (!valido) {
-			try {
-                i = sc.nextInt();
-                valido = true;  // Si llega aquí, es un entero válido
-            }
-			catch (InputMismatchException e) {
-                System.out.println("Error: debe ingresar un número entero.");
-            }
-            sc.nextLine();  // Limpiar el buffer del scanner
-		}
-		return i;
-	}
-	private static Generos obtenerGenero() {
-		Generos genero = null;
-		boolean valido = false;
-		int generoOpcion;
-		for(Generos g : Generos.values()) {
-			System.out.println(g.ordinal() + 1 + ". " + g);
-		}
-		while(!valido) {
-			generoOpcion = obtenerInt();
-			if(generoOpcion > 0 && generoOpcion <= Generos.values().length) {
-				genero = Generos.values()[generoOpcion-1];
-				valido = true;
-			}
-			else System.out.println("Error: debe ingresar un número entre 1 y " + Generos.values().length);
-		}
-		return genero;
-	}
-	private static boolean confirmar() {
-		 String respuesta;
-	     do {
-	    	 System.out.print("¿Deseas confirmar la operación? (S/N): ");
-	    	 respuesta = sc.nextLine().trim().toUpperCase();
-	     } while (!respuesta.equals("S") && !respuesta.equals("N"));
-	     if(respuesta.equals("S")) {
-	    	 System.out.println("Operación confirmada.");
-	    	 return true;
-	     }
-	     else{
-	    	 System.out.println("Operación cancelada.");
-	    	 return false;
-	     }
-	}
+	
 	
 	public static void listarPeliculasEnOrden(){
 		mostrarPeliculas(ordenarPeliculas(obtenerPeliculas()));
@@ -96,7 +34,7 @@ public final class PeliculaUtil {
     	System.out.println("2. Duración");
     	System.out.println("3. Género");
     	while (!valido) {
-	    	int opcion = obtenerInt();
+	    	int opcion = Verificador.obtenerInt();
 			switch(opcion) {
 			case 1:
 				comparador = new ComparadorTitulo(); valido= true;
@@ -134,16 +72,16 @@ public final class PeliculaUtil {
 		System.out.println("Ingrese el título de la película:");
 		nue.setTitulo(sc.nextLine().trim());
 		System.out.println("Ingrese la duración de la película (en minutos):");
-		nue.setDuracion(obtenerDouble());
+		nue.setDuracion(Verificador.obtenerDouble());
 		System.out.println("Seleccione el género de la película:");
-		nue.setGenero(obtenerGenero());
+		nue.setGenero(Verificador.obtenerGenero());
 		System.out.println("Ingrese el director de la película:");
 		nue.setDirector(sc.nextLine().trim());
 		System.out.println("Pelicula: " + nue.getTitulo()
 			+ "\nDuración: " + nue.getDuracion()
 			+ "\nGénero: " + nue.getGenero()
 			+ "\nDirector: " + nue.getDirector());
-		if(confirmar()) {
+		if(Verificador.confirmar()) {
 			peliculaDAO.insertar(nue);
 			System.out.println("Película registrada exitosamente.");
 		}

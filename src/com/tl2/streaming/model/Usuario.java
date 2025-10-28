@@ -17,7 +17,7 @@ public class Usuario{
 
     @Override
     public String toString(){
-        return super.toString()+" Nombre de usuario: "+nombreUsuario+" Email: "+email +" Contraseña: "+contrasenia;
+        return "Nombre de usuario: " + nombreUsuario + " Email: " + email +" Contraseña: " + contrasenia;
     }
 
     public void setPersona(Persona persona){

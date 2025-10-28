@@ -31,14 +31,14 @@ public class StreamingApp{
 	        sc.nextLine(); // limpiar buffer
 	
 	        switch (opcion) {
-//	            case 1: PersonaUtil.registrarPersona();
-//	            case 2: UsuarioUtil.registrarUsuario();
-	            case 3: PeliculaUtil.registrarPelicula();
-//	            case 4: UsuarioUtil.listarUsuarios();
-	            case 5: PeliculaUtil.listarPeliculasEnOrden();
-	            case 6: ReseniaUtil.registrarResenia();
-	            case 7: ReseniaUtil.aprobarResenia();
-	            case 0: System.out.println("Saliendo del sistema...");
+	            case 1: PersonaUtil.registrarPersona(); break;
+	            case 2: UsuarioUtil.ingresarUsuario(); break;
+	            case 3: PeliculaUtil.registrarPelicula(); break;
+	            case 4: UsuarioUtil.listarUsuarios(); break;
+	            case 5: PeliculaUtil.listarPeliculasEnOrden(); break;
+	            case 6: ReseniaUtil.registrarResenia(); break;
+	            case 7: ReseniaUtil.aprobarResenia(); break;
+	            case 0: System.out.println("Saliendo del sistema..."); break;
 	            default: System.out.println("Opción inválida. Intente nuevamente.");
 	        }
 	        System.out.print("Presione ENTER para continuar...");
