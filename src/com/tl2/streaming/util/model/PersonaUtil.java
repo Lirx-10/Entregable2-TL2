@@ -83,16 +83,17 @@ public final class PersonaUtil {
             System.out.println("Ingrese su DNI: ");
             p.setDNI(validarDNI()); 
             p.setEdad(validarEdad());
+
             System.out.println(p);
             System.out.println("Los datos ingresados son correctos?");
             System.out.println("1: Si son correctos");
             System.out.println("2: No son correctos");
             check = sc.nextInt();
+            sc.nextLine();
             if(check == 2){
                 System.out.println("Ingrese los datos nuevamente");
             }
         }while(check == 2);
-        
         pd.insertar(p);
     }
 
@@ -106,17 +107,18 @@ public final class PersonaUtil {
             p.setApellido(validarNombre());
             System.out.println("Ingrese su DNI: ");
             p.setDNI(validarDNI()); 
+            p.setEdad(validarEdad());
 
             System.out.println(p);
             System.out.println("Los datos ingresados son correctos?");
             System.out.println("1: Si son correctos");
             System.out.println("2: No son correctos");
             check = sc.nextInt();
+            sc.nextLine();// limpiar buffer
             if(check == 2){
                 System.out.println("Ingrese los datos nuevamente");
             }
         }while(check == 2);
-        
         pd.insertar(p);
         return pd.obtenerId(p.getNombre());
     }

@@ -9,10 +9,11 @@ public class Usuario{
 
     public Usuario(){}
     
-    public Usuario(String nombre, String apellido, int DNI, int edad,String nombreUsuario,String email,String contrasenia){
+    public Usuario(String nombreUsuario,String email,String contrasenia, Persona persona){
         this.nombreUsuario = nombreUsuario;
         this.email = email;
         this.contrasenia = contrasenia;
+        this.persona = persona;
     } 
 
     @Override

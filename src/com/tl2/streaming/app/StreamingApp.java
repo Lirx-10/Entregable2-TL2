@@ -12,12 +12,14 @@ public class StreamingApp{
     public static void main(String[] args) {
     	System.out.println("Inicializando base de datos...");
     	SQLiteJDBC.inicializarBaseDatos();
+		System.out.println("Presione Enter para comenzar");
     	Scanner sc = new Scanner(System.in);
     	sc.nextLine();
     	int opcion;
     	do {
     		limpiarConsola();
 	        System.out.println("\n=== MENÚ PRINCIPAL ===");
+			
 	        System.out.println("1. Registrar Persona");
 	        System.out.println("2. Registrar Usuario");
 	        System.out.println("3. Registrar Película");

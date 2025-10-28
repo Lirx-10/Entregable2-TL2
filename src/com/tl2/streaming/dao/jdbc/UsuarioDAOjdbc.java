@@ -70,7 +70,7 @@ public class UsuarioDAOjdbc implements UsuarioDAO {
     @Override
     public Usuario obtener(int id) {
         Usuario user = new Usuario();
-        String query = "SELECT * FROM USUARIO WHERE ID = " + id + ";";
+        String query = "SELECT * FROM USUARIO WHERE ID = ?;";
         try {
             Connection conn = MyConnection.getConnection();
             try(PreparedStatement stmt = conn.prepareStatement(query);){
@@ -126,9 +126,9 @@ public class UsuarioDAOjdbc implements UsuarioDAO {
     }
 
     @Override
-    public int validarUsuario(String u, String c){
-        String query = "SELECT ID FROM USUARIO WHERE NOMBRE_USUARIO = ? AND CONTRASENIA = ?;";
-        int id = 0;
+    public Usuario validarUsuario(String u, String c){
+        String query = "SELECT * FROM USUARIO WHERE NOMBRE_USUARIO = ? AND CONTRASENIA = ?;";
+        Usuario user = new Usuario();
         try {
             Connection conn = MyConnection.getConnection();
             try(PreparedStatement stmt = conn.prepareStatement(query)){
@@ -136,14 +136,19 @@ public class UsuarioDAOjdbc implements UsuarioDAO {
                 stmt.setString(2, c);
                 try(ResultSet rs = stmt.executeQuery()){
                     if(rs.next()){
-                        id = rs.getInt("ID");
+                        user.setId(rs.getInt("ID"));;
+                        user.setNombreUsuario(rs.getString("NOMBRE_USUARIO"));
+                        user.setEmail(rs.getString("EMAIL"));
+                        user.setContrasenia(rs.getString("CONTRASENIA"));
+                    }else{
+                        user = null;
                     }
                 }
             }
         } catch (SQLException e) {
             System.out.println("Error al validar el usuario "+e.getMessage());
         }
-        return id;
+        return user;
     }
 
 }

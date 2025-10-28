@@ -7,7 +7,7 @@ import java.util.List;
 import com.tl2.streaming.dao.FactoryDAO;
 import com.tl2.streaming.dao.UsuarioDAO;
 // Clases Modelo
-
+import com.tl2.streaming.model.Persona;
 import com.tl2.streaming.model.Usuario;
 //Clases Util
 import com.tl2.streaming.util.comparators.ComparadorNombre;
@@ -19,17 +19,34 @@ public final class UsuarioUtil {
     private static final Scanner sc = new Scanner(System.in);
     private static final UsuarioDAO ud = FactoryDAO.getUsuarioDAO();
 
-    public static boolean verificarEmail(String email){
-        return email.matches("^\\w+@\\w+\\.\\w+$");
+    public static String verificarEmail(){
+        String email;
+        boolean valido = false;
+            do{
+                email = sc.nextLine().trim().toLowerCase();
+                if (email.matches("^\\w+@\\w+\\.\\w+$")==false){
+                    System.out.println("Ingrese el email nuevamente con formato xxx@yyy.zzz");
+                }else{
+                    valido = true;
+                }
+            } while(valido == false);
+        return email;
     }
 
-    public static boolean verificarContrasenia(String contrasenia){
+    public static String verificarContrasenia(){
         // Contrasenia con al menos 4 caracteres
-        if (contrasenia.length() < 4){
-            return false;
-        }else{
-            return true;
-        }
+        String contrasenia;
+        boolean valido = false;
+        do{
+            contrasenia = sc.nextLine().trim();
+            if (contrasenia.length() > 4){
+                valido = true;
+            }else{
+                System.out.println("La contraseña debe de tener mas de 4 caracteres");
+                System.out.println("Ingresela nuevamente");
+            }
+        }while(valido==false);
+        return contrasenia;
     }
 
     public static int seleccionarPersona(){      
@@ -60,33 +77,20 @@ public final class UsuarioUtil {
                 System.out.println("Persona no encontrada, ingrese un id valido");
             }
         }while(id_persona==0);
-        u.setId(id_persona);
+        Persona p = new Persona();
+        u.setPersona(p);
+        u.getPersona().setId(id_persona);
         
         int check;
         do{
             System.out.println("Ingrese el nombre de usuario: ");
-            String nombreUsuario = sc.nextLine().trim();
-            u.setNombreUsuario(nombreUsuario);
+            u.setNombreUsuario(sc.nextLine().trim());
 
-            String email;
-            do{
-                System.out.println("Ingrese su email: ");
-                email = sc.nextLine().trim().toLowerCase();
-                if (verificarEmail(email)==false){
-                    System.out.println("Ingrese el email nuevamente con formato xxx@yyy");
-                }else{
-                    u.setEmail(email);
-                }
-            } while(verificarEmail(email) == false);
+            System.out.println("Ingrese su email: ");
+            u.setEmail(verificarEmail());
 
-            String contrasenia;
-            do{
-                System.out.println("Ingrese su contraseña: ");
-                contrasenia = sc.nextLine().trim();
-                if (verificarContrasenia(contrasenia)==true){
-                    u.setContrasenia(contrasenia);
-                }
-            }while(verificarContrasenia(contrasenia)==false);
+            System.out.println("Ingrese su contraseña: ");
+            u.setContrasenia(verificarContrasenia());            
         
             System.out.println(u);
             System.out.println("Los datos ingresados son correctos?");
@@ -115,9 +119,8 @@ public final class UsuarioUtil {
     }
 
     public static Usuario verificarUsuario(String nombreUsuario, String contrasenia){
-        Usuario u = new Usuario();
-        int id = ud.validarUsuario(nombreUsuario, contrasenia);
-        if (id == 0){
+        Usuario u = ud.validarUsuario(nombreUsuario, contrasenia);;
+        if (u == null){
             System.out.println("El usuario ingresado no existe");
         }
         return u;
