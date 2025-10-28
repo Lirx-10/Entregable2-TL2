@@ -1,12 +1,13 @@
 package com.tl2.streaming.model;
 import java.time.Instant;
+import java.time.LocalDateTime;
 
 public class Resenia {
 	private int id;
     private int calificacion;
     private String comentario;
     private int aprobado;
-    private Instant fecha_hora;
+    private LocalDateTime fecha_hora;
     private Usuario usuario;
     private Pelicula pelicula;
 
@@ -38,10 +39,10 @@ public class Resenia {
     public void setAprobado(int aprobado) {
         this.aprobado = aprobado;
     }
-    public Instant getFecha_hora() {
+    public LocalDateTime getFecha_hora() {
         return fecha_hora;
     }
-    public void setFecha_hora(Instant fecha_hora) {
+    public void setFecha_hora(LocalDateTime fecha_hora) {
         this.fecha_hora = fecha_hora;
     }
 	public Usuario getUsuario() {
@@ -59,6 +60,6 @@ public class Resenia {
 	@Override
 	public String toString() {
 		return "Reseña ID = " + id + "\nCalificación = " + calificacion + "\nComentario = " + comentario + "\nAprobado = "
-				+ aprobado + "\nFecha_hora = " + fecha_hora + "\nID_Usuario = " + usuario.getId() + "\npelicula = ID" + pelicula;
+				+ aprobado + "\nFecha_hora = " + fecha_hora + "\nID_Usuario = " + this.usuario.getId() + "\npelicula = ID" + pelicula;
 	}
 }

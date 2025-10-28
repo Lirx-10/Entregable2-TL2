@@ -1,6 +1,7 @@
 package com.tl2.streaming.util.model;
 
 import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Scanner;
 
@@ -32,6 +33,10 @@ public final class ReseniaUtil {
 		Resenia nue = new Resenia();
 		nue.setUsuario(u);
 		List<Pelicula> peliculas = PeliculaUtil.obtenerPeliculas();
+        if(peliculas == null){
+            System.out.println("No existen peliculas en la base de datos. Saliendo...");
+            return;
+        }
 		PeliculaUtil.mostrarTitulos(peliculas);
 		System.out.print("Seleccione el número de la película a la cual desea hacer una reseña: ");
 		int pos = Verificador.obtenerInt();
@@ -50,16 +55,12 @@ public final class ReseniaUtil {
 		System.out.println("Ingrese el comentario:");
 		nue.setComentario(sc.nextLine());
 		nue.setAprobado(0); // Por defecto no aprobado
-		nue.setFecha_hora(Instant.now());
+		nue.setFecha_hora(LocalDateTime.now());
 		nue.setUsuario(u);
 		if(Verificador.confirmar()) reseniaDAO.insertar(nue);
     }
 	public static List<Resenia> obtenerResenias(){
 		List<Resenia> lista = reseniaDAO.obtenerTodo();
-		for(Resenia r : lista) {
-			int idUsuario = r.getUsuario().getId();
-			r.setUsuario(usuarioDAO.obtener(idUsuario));
-		}
 		return lista;
 	}
 	public static void mostrarReseniasNoAprobadas(List<Resenia> resenias) {
@@ -96,7 +97,9 @@ public final class ReseniaUtil {
 			boolean conf = Verificador.confirmar();
 			if(conf) {
 				re.setAprobado(1);
+                System.out.println(re);
 				reseniaDAO.modificar(re);
+                System.out.println(re);
 			}
 		}
 	}
