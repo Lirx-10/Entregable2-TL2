@@ -119,7 +119,7 @@ public final class UsuarioUtil {
     }
 
     public static Usuario verificarUsuario(String nombreUsuario, String contrasenia){
-        Usuario u = ud.validarUsuario(nombreUsuario, contrasenia);;
+        Usuario u = ud.validarUsuario(nombreUsuario, contrasenia);
         if (u == null){
             System.out.println("El usuario ingresado no existe");
         }
